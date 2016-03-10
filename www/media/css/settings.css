@@ -1,0 +1,80 @@
+#container-personal {
+    float: none;
+    margin: 20px auto;
+}
+#container-personal .form-group > label {
+    text-align: left;
+}
+
+#container-personal-birthdate {
+    font-size: 0;
+}
+#container-personal-birthdate > select {
+    display: inline-block;
+}
+#container-personal-birthdate > select:nth-of-type(1) {
+    width: 25%;
+    margin-right: 5%;
+}
+#container-personal-birthdate > select:nth-of-type(2) {
+    width: 40%;
+    margin-right: 5%;
+}
+#container-personal-birthdate > select:nth-of-type(3) {
+    width: 25%;
+}
+
+#container-personal-buttons {
+    font-size: 0;
+}
+#container-personal-buttons > a,
+#container-personal-buttons > input{
+    width: 100px;
+}
+#container-personal-buttons > a {
+    margin-right: 25px;
+}
+
+
+#container-account {
+    float: none;
+    margin: 20px auto;
+}
+#container-account .form-group > label {
+    text-align: left;
+}
+#container-account .form-group:nth-of-type(2) > label,
+#container-account .form-group:nth-of-type(5) > label {
+    padding-top: 0;
+    margin-top: -3px;
+}
+#container-account-avatar > a > img {
+    width: 215px;
+}
+#container-account-buttons > a,
+#container-account-buttons > input{
+    width: 100px;
+}
+#container-account-buttons > a {
+    margin-right: 25px;
+}
+.container-account-prompt {
+    margin-top: 10px;
+    text-align: center;
+}
+
+
+#container-social {
+    float: none;
+    margin: 20px auto;
+}
+#container-social .form-group > label {
+    text-align: left;
+}
+#container-social-buttons > a,
+#container-social-buttons > input{
+    width: 100px;
+}
+#container-social-buttons > a {
+    margin-right: 25px;
+}

@@ -12,7 +12,7 @@ class Model_User extends Model_Auth_User {
     public static function get_password_validation($values)
     {
         return Validation::factory($values)
-//            ->rule('password', 'min_length', array(':value', 8))
+            //->rule('password', 'min_length', array(':value', 8))
             ->rule('password', 'min_length', array(':value', 3))
             ->rule('password_confirm', 'matches', array(':validation', ':field', 'password'));
     }

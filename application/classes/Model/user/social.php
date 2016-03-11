@@ -8,7 +8,23 @@ class Model_User_Social extends ORM {
     public function rules()
     {
         return array(
-            TRUE => array(
+            'profile_vk' => array(
+                array('max_length', array(':value', 255)),
+                array('Valid::profile', array(':value', ':field')),
+            ),
+            'profile_fb' => array(
+                array('max_length', array(':value', 255)),
+                array('Valid::profile', array(':value', ':field')),
+            ),
+            'profile_gp' => array(
+                array('max_length', array(':value', 255)),
+                array('Valid::profile', array(':value', ':field')),
+            ),
+            'profile_tw' => array(
+                array('max_length', array(':value', 255)),
+                array('Valid::profile', array(':value', ':field')),
+            ),
+            'profile_ok' => array(
                 array('max_length', array(':value', 255)),
                 array('Valid::profile', array(':value', ':field')),
             ),
@@ -18,7 +34,23 @@ class Model_User_Social extends ORM {
     public function filters()
     {
         return array(
-            TRUE => array(
+            'profile_vk' => array(
+                array('trim'),
+                array('strip_tags'),
+            ),
+            'profile_fb' => array(
+                array('trim'),
+                array('strip_tags'),
+            ),
+            'profile_gp' => array(
+                array('trim'),
+                array('strip_tags'),
+            ),
+            'profile_tw' => array(
+                array('trim'),
+                array('strip_tags'),
+            ),
+            'profile_ok' => array(
                 array('trim'),
                 array('strip_tags'),
             ),
@@ -28,6 +60,7 @@ class Model_User_Social extends ORM {
     public function labels()
     {
         return array(
+            'user_id'    => 'Пользователь',
             'profile_vk' => 'Вконтакте',
             'profile_fb' => 'Facebook',
             'profile_gp' => 'Google+',

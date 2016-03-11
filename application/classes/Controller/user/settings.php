@@ -51,70 +51,31 @@ class Controller_User_Settings extends Controller_User_Base {
             // Add element with 'birthdate' key into post array
             $birthdate = $post['year'].'-'.$post['month'].'-'.$post['day'];
             $post['birthdate'] = $birthdate;
+            // Add element with 'user_id' key into post array
+            $post['user_id'] = $this->user_id;
 
-            // Create object of Validation class
-            $validation = Validation::factory($post);
+            // Delete elements with keys of 'year', 'month' and 'day' of post
+            // array
+            unset($post['year'], $post['month'], $post['day']);
 
-            // Set labels for fields
-            $validation
-                ->label('name', 'Имя пользователя')
-                ->label('birthdate', 'Дата рождения')
-                ->label('sex', 'Пол')
-                ->label('city', 'Город')
-                ->label('activity', 'Деятельность')
-                ->label('about_me', 'О себе');
+            // Get names of all fields
+            $expected = array_keys($model->user_personal->labels());
 
-            // Create validation rules
-            $validation
-                ->rule('name', 'max_length', array(':value', 50))
-                ->rule('birthdate', 'date')
-                ->rule('sex', 'regex', array(':value', '/^[012]$/'))
-                ->rule('city', 'max_length', array(':value', 50))
-                ->rule('activity', 'max_length', array(':value', 255));
+            // Set values for fields
+            $model->user_personal->values($post, $expected);
 
-            // Check that validation rules are made
-            if ($validation->check())
+            try
             {
-                try
-                {
-                    $model->user_personal->values(
-                        array(
-                            'name'      => $post['name'],
-                            'birthdate' => $post['birthdate'],
-                            'sex'       => $post['sex'],
-                            'city'      => $post['city'],
-                            'activity'  => $post['activity'],
-                            'about_me'  => $post['about_me'],
-                        )
-                    );
+                // Save changes
+                $model->user_personal->save();
 
-                    // Check that model of personal data of user is loaded
-                    if ($model->user_personal->loaded())
-                    {
-                        // Update personal data of user
-                        $model->user_personal->update();
-                    }
-                    else
-                    {
-                        // Create new personal data of user
-                        $model->user_personal
-                            ->set('user_id', $this->user_id)
-                            ->create();
-                    }
-
-                    // Redirect to page of personal data
-                    $this->redirect('user/settings/personal/'.$this->user_id);
-                }
-                catch (ORM_Validation_Exception $e)
-                {
-                    // Get messages about errors
-                    $errors = $e->errors($e->alias());
-                }
+                // Redirect to page of personal data
+                $this->redirect(URL::get_user_default_url('settings', 'personal', $this->user_id));
             }
-            else
+            catch (ORM_Validation_Exception $e)
             {
                 // Get messages about errors
-                $errors = $validation->errors('validation');
+                $errors = $e->errors($e->alias());
             }
         }
 
@@ -124,10 +85,7 @@ class Controller_User_Settings extends Controller_User_Base {
         $days   = Date::days(1);
 
         // Create list of sexes
-        $sexes = array(
-            1 => 'Мужской',
-            2 => 'Женский',
-        );
+        $sexes = Model_User_Personal::get_sexes();
 
         // Get personal date of user as array
         $settings = $model->user_personal->as_array();
@@ -135,14 +93,7 @@ class Controller_User_Settings extends Controller_User_Base {
         // If element of settings array with 'birthdate' key is defined
         if ($settings['birthdate'])
         {
-            $birthdate = array_combine(
-                array(
-                    'year',
-                    'month',
-                    'day',
-                ),
-                explode('-', $settings['birthdate'])
-            );
+            $birthdate = array_combine(array('year', 'month', 'day'), explode('-', $settings['birthdate']));
 
             // Add elements with keys of 'year', 'month' and 'day' into settings
             // array
@@ -152,18 +103,19 @@ class Controller_User_Settings extends Controller_User_Base {
         // If post array is defined
         if ($post)
         {
-            // Overwrite settings array by post array
+            // Merge settings array by post array
             $settings = Arr::merge($settings, $post);
         }
 
-        $view
-            ->set('years', $years)
-            ->set('months', $months)
-            ->set('days', $days)
-            ->set('sexes', $sexes)
-            ->set('settings', $settings)
-            ->set('errors', $errors)
-            ->set('user_id', $this->user_id);
+        $view->set(array(
+            'years'    => $years,
+            'months'   => $months,
+            'days'     => $days,
+            'sexes'    => $sexes,
+            'settings' => $settings,
+            'errors'   => $errors,
+            'user_id'  => $this->user_id,
+        ));
 
         $this->container->content = $view;
     }
@@ -297,79 +249,28 @@ class Controller_User_Settings extends Controller_User_Base {
         {
             // Get values from POST array
             $post = $this->request->post();
+            // Add element with 'user_id' key into post array
             $post['user_id'] = $this->user_id;
 
+            // Get names of all fields
             $expected = array_keys($model->user_social->labels());
 
+            // Set values for fields
             $model->user_social->values($post, $expected);
 
-            // Create object of Validation class
-//            $validation = Validation::factory($post);
-//
-//            // Set labels for fields
-//            $validation
-//                ->label('profile_vk', 'Вконтакте')
-//                ->label('profile_fb', 'Facebook')
-//                ->label('profile_gp', 'Google+')
-//                ->label('profile_tw', 'Twitter')
-//                ->label('profile_ok', 'Одноклассники');
+            try
+            {
+                // Save changes
+                $model->user_social->save();
 
-            // Create validation rules
-//            $validation
-//                ->rule(TRUE, 'max_length', array(':value', 255))
-//                ->rule('profile_vk', 'Valid::profile_vk')
-//                ->rule('profile_fb', 'Valid::profile_fb')
-//                ->rule('profile_gp', 'Valid::profile_gp')
-//                ->rule('profile_tw', 'Valid::profile_tw')
-//                ->rule('profile_ok', 'Valid::profile_ok');
-
-            // Check that validation rules are made
-//            if ($validation->check())
-//            {
-                try
-                {
-//                    $model->user_social->values(
-//                        array(
-//                            'profile_vk' => $post['profile_vk'],
-//                            'profile_fb' => $post['profile_fb'],
-//                            'profile_gp' => $post['profile_gp'],
-//                            'profile_tw' => $post['profile_tw'],
-//                            'profile_ok' => $post['profile_ok'],
-//                        )
-//                    );
-
-                    // Check that model of data of social networks of user is
-                    // loaded
-//                    if ($model->user_social->loaded())
-//                    {
-//                        // Update data of social networks of user
-//                        $model->user_social->update();
-//                    }
-//                    else
-//                    {
-//                        // Create new data of social networks of user
-//                        $model->user_social
-//                            ->set('user_id', $this->user_id)
-//                            ->create();
-//                    }
-
-                    $model->user_social->save();
-
-                    // Redirect to page of data of social networks
-                    $this->redirect(URL::get_user_default_url('settings', 'social', $this->user_id));
-//                    $this->redirect('user/settings/social/'.$this->user_id);
-                }
-                catch (ORM_Validation_Exception $e)
-                {
-                    // Get messages about errors
-                    $errors = $e->errors($e->alias());
-                }
-//            }
-//            else
-//            {
-//                // Get messages about errors
-//                $errors = $validation->errors('validation');
-//            }
+                // Redirect to page of data of social networks
+                $this->redirect(URL::get_user_default_url('settings', 'social', $this->user_id));
+            }
+            catch (ORM_Validation_Exception $e)
+            {
+                // Get messages about errors
+                $errors = $e->errors($e->alias());
+            }
         }
 
         // Get data of social networks of user as array
@@ -378,22 +279,15 @@ class Controller_User_Settings extends Controller_User_Base {
         // If post array is defined
         if ($post)
         {
-            // Overwrite settings array by post array
+            // Merge settings array by post array
             $settings = Arr::merge($settings, $post);
         }
 
-        $view->set(
-            array(
-                'settings' => $settings,
-                'errors'   => $errors,
-                'user_id'  => $this->user_id,
-            )
-        );
-
-//        $view
-//            ->set('settings', $settings)
-//            ->set('errors', $errors)
-//            ->set('user_id', $this->user_id);
+        $view->set(array(
+            'settings' => $settings,
+            'errors'   => $errors,
+            'user_id'  => $this->user_id,
+        ));
 
         $this->container->content = $view;
     }

@@ -2,6 +2,18 @@
 
 class URL extends Kohana_URL {
 
+    public static function get_user_default_url($controller = '', $action = '', $id = NULL)
+    {
+        return Route::url('user_default',
+            array(
+                'directory'  => 'user',
+                'controller' => $controller,
+                'action'     => $action,
+                'id'	     => $id,
+            )
+        );
+    }
+
     public static function get_default_url($controller = '', $action = '', $id = NULL)
     {
         return Route::url('default',

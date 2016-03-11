@@ -2,7 +2,17 @@
 
 class View extends Kohana_View {
 
-    public function set(array $params = array())
+    public function set($key, $value = NULL)
+    {
+        if (is_array($key))
+        {
+            return $this->set_array($key);
+        }
+
+        return parent::set($key, $value);
+    }
+
+    public function set_array(array $params = array())
     {
         foreach ($params as $key => $value)
         {

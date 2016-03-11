@@ -13,8 +13,7 @@ class Controller_User_Settings extends Controller_User_Base {
 
         parent::before();
 
-        $this->container = View::factory('user/settings');
-        $this->container
+        $this->container = View::factory('user/settings')
             ->set('user_id', $this->user_id);
 
         $links = array(
@@ -109,7 +108,7 @@ class Controller_User_Settings extends Controller_User_Base {
                 catch (ORM_Validation_Exception $e)
                 {
                     // Get messages about errors
-                    $errors = $e->errors('model');
+                    $errors = $e->errors($e->alias());
                 }
             }
             else
@@ -248,7 +247,7 @@ class Controller_User_Settings extends Controller_User_Base {
                 catch (ORM_Validation_Exception $e)
                 {
                     // Get messages about errors
-                    $errors = $e->errors('model');
+                    $errors = $e->errors($e->alias());
                 }
             }
             else
@@ -298,71 +297,79 @@ class Controller_User_Settings extends Controller_User_Base {
         {
             // Get values from POST array
             $post = $this->request->post();
+            $post['user_id'] = $this->user_id;
+
+            $expected = array_keys($model->user_social->labels());
+
+            $model->user_social->values($post, $expected);
 
             // Create object of Validation class
-            $validation = Validation::factory($post);
-
-            // Set labels for fields
-            $validation
-                ->label('profile_vk', 'Вконтакте')
-                ->label('profile_fb', 'Facebook')
-                ->label('profile_gp', 'Google+')
-                ->label('profile_tw', 'Twitter')
-                ->label('profile_ok', 'Одноклассники');
+//            $validation = Validation::factory($post);
+//
+//            // Set labels for fields
+//            $validation
+//                ->label('profile_vk', 'Вконтакте')
+//                ->label('profile_fb', 'Facebook')
+//                ->label('profile_gp', 'Google+')
+//                ->label('profile_tw', 'Twitter')
+//                ->label('profile_ok', 'Одноклассники');
 
             // Create validation rules
-            $validation
-                ->rule(TRUE, 'max_length', array(':value', 255))
-                ->rule('profile_vk', 'Valid_Social::profile_vk')
-                ->rule('profile_fb', 'Valid_Social::profile_fb')
-                ->rule('profile_gp', 'Valid_Social::profile_gp')
-                ->rule('profile_tw', 'Valid_Social::profile_tw')
-                ->rule('profile_ok', 'Valid_Social::profile_ok');
+//            $validation
+//                ->rule(TRUE, 'max_length', array(':value', 255))
+//                ->rule('profile_vk', 'Valid::profile_vk')
+//                ->rule('profile_fb', 'Valid::profile_fb')
+//                ->rule('profile_gp', 'Valid::profile_gp')
+//                ->rule('profile_tw', 'Valid::profile_tw')
+//                ->rule('profile_ok', 'Valid::profile_ok');
 
             // Check that validation rules are made
-            if ($validation->check())
-            {
+//            if ($validation->check())
+//            {
                 try
                 {
-                    $model->user_social->values(
-                        array(
-                            'profile_vk' => $post['profile_vk'],
-                            'profile_fb' => $post['profile_fb'],
-                            'profile_gp' => $post['profile_gp'],
-                            'profile_tw' => $post['profile_tw'],
-                            'profile_ok' => $post['profile_ok'],
-                        )
-                    );
+//                    $model->user_social->values(
+//                        array(
+//                            'profile_vk' => $post['profile_vk'],
+//                            'profile_fb' => $post['profile_fb'],
+//                            'profile_gp' => $post['profile_gp'],
+//                            'profile_tw' => $post['profile_tw'],
+//                            'profile_ok' => $post['profile_ok'],
+//                        )
+//                    );
 
                     // Check that model of data of social networks of user is
                     // loaded
-                    if ($model->user_social->loaded())
-                    {
-                        // Update data of social networks of user
-                        $model->user_social->update();
-                    }
-                    else
-                    {
-                        // Create new data of social networks of user
-                        $model->user_social
-                            ->set('user_id', $this->user_id)
-                            ->create();
-                    }
+//                    if ($model->user_social->loaded())
+//                    {
+//                        // Update data of social networks of user
+//                        $model->user_social->update();
+//                    }
+//                    else
+//                    {
+//                        // Create new data of social networks of user
+//                        $model->user_social
+//                            ->set('user_id', $this->user_id)
+//                            ->create();
+//                    }
+
+                    $model->user_social->save();
 
                     // Redirect to page of data of social networks
-                    $this->redirect('user/settings/social/'.$this->user_id);
+                    $this->redirect(URL::get_user_default_url('settings', 'social', $this->user_id));
+//                    $this->redirect('user/settings/social/'.$this->user_id);
                 }
                 catch (ORM_Validation_Exception $e)
                 {
                     // Get messages about errors
-                    $errors = $e->errors('model');
+                    $errors = $e->errors($e->alias());
                 }
-            }
-            else
-            {
-                // Get messages about errors
-                $errors = $validation->errors('validation');
-            }
+//            }
+//            else
+//            {
+//                // Get messages about errors
+//                $errors = $validation->errors('validation');
+//            }
         }
 
         // Get data of social networks of user as array
@@ -375,10 +382,18 @@ class Controller_User_Settings extends Controller_User_Base {
             $settings = Arr::merge($settings, $post);
         }
 
-        $view
-            ->set('settings', $settings)
-            ->set('errors', $errors)
-            ->set('user_id', $this->user_id);
+        $view->set(
+            array(
+                'settings' => $settings,
+                'errors'   => $errors,
+                'user_id'  => $this->user_id,
+            )
+        );
+
+//        $view
+//            ->set('settings', $settings)
+//            ->set('errors', $errors)
+//            ->set('user_id', $this->user_id);
 
         $this->container->content = $view;
     }

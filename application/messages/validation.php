@@ -16,8 +16,8 @@ return array(
 	'equals'        => ':field must equal :param2',
 	'exact_length'  => ':field must be exactly :param2 characters long',
 	'image'         => array(
-		'Upload::size'  => 'Файл превышает максимально допустимый размер',
-		'Upload::image' => 'Файл не является изображением, либо имеет неправильные размеры'
+		'Upload::size'   => 'Файл превышает максимально допустимый размер',
+		'Upload::image'  => 'Файл не является изображением, либо имеет неправильные размеры'
 	),
 	'in_array'      => ':field must be one of the available options',
 	'ip'            => 'Поле :field должно быть IP адресом',
@@ -28,6 +28,9 @@ return array(
 	'not_empty'     => 'Поле :field не должно быть пустым',
 	'numeric'       => ':field must be numeric',
 	'phone'         => 'Поле :field должно быть номером телефона',
+	'profile'       => array(
+		'Valid::profile' => 'Значение поля :field не является правильным адресом'
+	),
 	'range'         => ':field must be within the range of :param2 to :param3',
 	'regex'         => 'Поле :field не соответствует требуемому формату',
 	'url'           => 'Поле :field должно быть URL адресом',

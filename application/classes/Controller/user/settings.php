@@ -299,11 +299,7 @@ class Controller_User_Settings extends Controller_User_Base {
             $post = $this->request->post();
             $post['user_id'] = $this->user_id;
 
-<<<<<<< HEAD
             $expected = array_keys($model->user_social->labels());
-=======
-            $expected = array_keys($model->user_social->labels())
->>>>>>> c728bd26d5d5c441edb780515b1dd84d8d5ed3ba
 
             $model->user_social->values($post, $expected);
 

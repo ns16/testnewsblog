@@ -24,6 +24,9 @@ class Controller_User extends Controller_Body {
         // Check that HTTP method is POST
         if (HTTP_Request::POST == $this->request->method())
         {
+            // Get values from POST array
+            $post = $this->request->post();
+
             // Create object of Validation class
             $validation = Validation::factory($this->request->post());
 
@@ -41,13 +44,11 @@ class Controller_User extends Controller_Body {
                 ->rule('username', 'max_length', array(':value', 32))
                 ->rule('email', 'email')
                 ->rule('email', 'max_length', array(':value', 254))
-                ->rule('password', 'matches',
-                    array(
-                        ':data',
-                        ':field',
-                        'password_confirm',
-                    )
-                )
+                ->rule('password', 'matches', array(
+                    ':data',
+                    ':field',
+                    'password_confirm'
+                ))
                 ->rule('password', 'max_length', array(':value', 64))
                 ->rule('captcha', 'captcha');
 
@@ -56,9 +57,6 @@ class Controller_User extends Controller_Body {
             {
                 try
                 {
-                    // Get values from POST array
-                    $post = $this->request->post();
-
                     // Compose list of required fields
                     $expected = array(
                         'username',
@@ -76,11 +74,9 @@ class Controller_User extends Controller_Body {
                     {
                         // Create new user and set login role
                         $model->create_user($post, $expected);
-                        $model->add('roles', ORM::factory('role',
-                            array(
-                                'name' => 'login',
-                            )
-                        ));
+                        $model->add('roles', ORM::factory('role', array(
+                            'name' => 'login',
+                        )));
                     }
 
                     // Redirect to view articles page
@@ -88,10 +84,10 @@ class Controller_User extends Controller_Body {
                 }
                 catch (ORM_Validation_Exception $e)
                 {
-                    //
+                    // Set message error
                     $message = 'Ошибка регистрации!';
                     // Get messages about errors
-                    $errors = $e->errors('model');
+                    $errors = $e->errors($e->alias());
                 }
             }
             else
@@ -104,10 +100,11 @@ class Controller_User extends Controller_Body {
         // Get arithmetic task
         $task = Captcha::arithmetic_task();
 
-        $view
-            ->set('message', $message)
-            ->set('errors', $errors)
-            ->set('task', $task);
+        $view->set(array(
+            'message' => $message,
+            'errors'  => $errors,
+            'task'    => $task,
+        ));
 
         $links = array(
             'media/css/style.css',

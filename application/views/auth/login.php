@@ -1,6 +1,6 @@
 <div id="container">
     <div id="container-form" class="col-md-4">
-        <? if($message): ?>
+        <? if ($message): ?>
             <div id="container-form-message" class="bg-danger">
                 <?= $message; ?>
             </div>

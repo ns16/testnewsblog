@@ -5,7 +5,7 @@ class Controller_Auth extends Controller_Body {
     public function action_login()
     {
         // Check that user is logged
-        if($this->user)
+        if ($this->user)
         {
             throw new HTTP_Exception_403;
         }
@@ -21,14 +21,14 @@ class Controller_Auth extends Controller_Body {
         $username = Arr::get($post, 'username');
 
         // Check that HTTP method is POST
-        if(HTTP_Request::POST == $this->request->method())
+        if (HTTP_Request::POST == $this->request->method())
         {
             // Create object of Validation class
-            $validation = Validation::factory($this->request->post());
+            $validation = Validation::factory($post);
 
             // Set labels for fields
             $validation
-                ->label('username', 'Имя')
+                ->label('username', 'Имя пользователя')
                 ->label('password', 'Пароль');
 
             // Create validation rules
@@ -37,11 +37,11 @@ class Controller_Auth extends Controller_Body {
                 ->rule('password', 'not_empty');
 
             // Check that validation rules are made
-            if($validation->check())
+            if ($validation->check())
             {
-                //
+                // Set remember variable
                 $remember = isset($post['remember'])
-                    ? (bool)$post['remember']
+                    ? (bool) $post['remember']
                     : FALSE;
 
                 // Check that username and password are valid
@@ -51,14 +51,14 @@ class Controller_Auth extends Controller_Body {
                     $remember
                 );
 
-                if($success)
+                if ($success)
                 {
                     // Redirect to view articles page
-                    $this->redirect(URL::site('/articles'));
+                    $this->redirect(URL::get_default_url('articles'));
                 }
                 else
                 {
-                    //
+                    // Set message error
                     $message = 'Ошибка входа!';
                 }
             }
@@ -69,10 +69,11 @@ class Controller_Auth extends Controller_Body {
             }
         }
 
-        $view
-            ->set('message', $message)
-            ->set('errors', $errors)
-            ->set('username', $username);
+        $view->set(array(
+            'message'  => $message,
+            'errors'   => $errors,
+            'username' => $username,
+        ));
 
         $links = array(
             'media/css/style.css',
@@ -87,7 +88,7 @@ class Controller_Auth extends Controller_Body {
     public function action_logout()
     {
         // Check that user is not logged
-        if(!$this->user)
+        if ( ! $this->user)
         {
             throw new HTTP_Exception_403;
         }
@@ -96,7 +97,7 @@ class Controller_Auth extends Controller_Body {
         Auth::instance()->logout();
 
         // Redirect to view articles page
-        $this->redirect(URL::site('articles'));
+        $this->redirect(URL::get_default_url('articles'));
     }
 
 } // End Autn

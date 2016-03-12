@@ -12,7 +12,6 @@ class Model_User extends Model_Auth_User {
     public static function get_password_validation($values)
     {
         return Validation::factory($values)
-            //->rule('password', 'min_length', array(':value', 8))
             ->rule('password', 'min_length', array(':value', 3))
             ->rule('password_confirm', 'matches', array(':validation', ':field', 'password'));
     }
@@ -56,4 +55,41 @@ class Model_User extends Model_Auth_User {
             'through' => 'roles_users',
         ),
     );
+
+    public function rules()
+    {
+        return array(
+            'username' => array(
+                array('not_empty'),
+                array('max_length', array(':value', 32)),
+                array(array($this, 'unique'), array('username', ':value')),
+            ),
+            'password' => array(
+                array('not_empty'),
+            ),
+            'email' => array(
+                array('not_empty'),
+                array('email'),
+                array(array($this, 'unique'), array('email', ':value')),
+            ),
+        );
+    }
+
+    public function filters()
+    {
+        return array(
+            'password' => array(
+                array(array(Auth::instance(), 'hash'))
+            )
+        );
+    }
+
+    public function labels()
+    {
+        return array(
+            'username' => 'Имя пользователя',
+            'email'    => 'E-mail',
+            'password' => 'Пароль',
+        );
+    }
 }

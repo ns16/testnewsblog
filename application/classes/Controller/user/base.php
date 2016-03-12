@@ -11,7 +11,7 @@ class Controller_User_Base extends Controller_Body {
     {
         parent::before();
 
-        // If user isn't logged or id of user not equals gotten id
+        // If user isn't logged or user id not equals gotten id
         if ( ! $this->user OR $this->user->id !== $this->user_id)
         {
             throw new HTTP_Exception_404;

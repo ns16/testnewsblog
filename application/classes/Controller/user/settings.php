@@ -70,7 +70,11 @@ class Controller_User_Settings extends Controller_User_Base {
                 $model->user_personal->save();
 
                 // Redirect to page of personal data
-                $this->redirect(URL::get_user_default_url('settings', 'personal', $this->user_id));
+                $this->redirect(URL::get_user_default_url(
+                    'settings',
+                    'personal',
+                    $this->user_id
+                ));
             }
             catch (ORM_Validation_Exception $e)
             {
@@ -161,17 +165,15 @@ class Controller_User_Settings extends Controller_User_Base {
                 ->rule('email', 'not_empty')
                 ->rule('email', 'email')
                 ->rule('email', 'max_length', array(':value', 254))
-                ->rule('password', 'matches',
-                    array(
-                        ':data',
-                        ':field',
-                        'password_confirm',
-                    )
-                )
+                ->rule('password', 'matches', array(
+                    ':data',
+                    ':field',
+                    'password_confirm',
+                ))
                 ->rule('password', 'max_length', array(':value', 64));
 
             // Check that validation rules are made
-            if ($result['path'] AND $validation->check())
+            if ($result['check'] AND $validation->check())
             {
                 try
                 {
@@ -194,7 +196,11 @@ class Controller_User_Settings extends Controller_User_Base {
                     }
 
                     // Redirect to page of account data
-                    $this->redirect('user/settings/account/'.$this->user_id);
+                    $this->redirect(URL::get_user_default_url(
+                        'settings',
+                        'account',
+                        $this->user_id
+                    ));
                 }
                 catch (ORM_Validation_Exception $e)
                 {
@@ -219,11 +225,12 @@ class Controller_User_Settings extends Controller_User_Base {
             // Overwrite settings array by post array
             $settings = Arr::overwrite($settings, $post);
         }
-
-        $view
-            ->set('settings', $settings)
-            ->set('errors', $errors)
-            ->set('user_id', $this->user_id);
+        var_dump($settings);//exit;
+        $view->set(array(
+            'settings' => $settings,
+            'errors'   => $errors,
+            'user_id'  => $this->user_id,
+        ));
 
         $this->container->content = $view;
     }
@@ -264,7 +271,11 @@ class Controller_User_Settings extends Controller_User_Base {
                 $model->user_social->save();
 
                 // Redirect to page of data of social networks
-                $this->redirect(URL::get_user_default_url('settings', 'social', $this->user_id));
+                $this->redirect(URL::get_user_default_url(
+                    'settings',
+                    'social',
+                    $this->user_id
+                ));
             }
             catch (ORM_Validation_Exception $e)
             {

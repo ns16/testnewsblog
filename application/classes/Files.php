@@ -2,26 +2,34 @@
 
 class Files  {
 
-    private static function uploads_dir()
+    private static $filename  = 'avatar-{$id}.png';
+    private static $directory = '/media/images/avatars';
+
+    private static function get_filename($id)
     {
-        return DOCROOT.str_replace('/', DIRECTORY_SEPARATOR, 'media/images/avatars').DIRECTORY_SEPARATOR;
+        return str_replace('{$id}', $id, self::$filename);
+    }
+
+    private static function get_directory()
+    {
+        return realpath(self::$directory).DIRECTORY_SEPARATOR;
     }
 
     public static function display($id)
     {
-        return '<a href="'.URL::site('user/profile/index/'.$id).'"><img src="/media/images/avatars/avatar-'.$id.'.png" alt=""></a>';
+        return '<a href="'.URL::get_user_default_url('profile', 'index', $id).'"><img src="'.self::$directory.'/'.self::get_filename($id).'" alt=""></a>';
     }
 
     public static function upload($id)
     {
         $result = array(
-            'path' => FALSE,
+            'check'  => FALSE,
             'errors' => array(),
         );
 
         if ( ! Arr::path($_FILES, 'image.size'))
         {
-            $result['path'] = TRUE;
+            $result['check'] = TRUE;
         }
         else
         {
@@ -42,11 +50,12 @@ class Files  {
             // Check that validation rules are made
             if ($validation->check())
             {
-                $filename = 'avatar-'.$id.'.png';
-                $directory = Files::uploads_dir();
+                // Set filename and directory
+                $filename  = Files::get_filename($id);
+                $directory = Files::get_directory();
 
                 // Set full path to new file or FALSE
-                $result['path'] = Upload::save($validation['image'], $filename, $directory);
+                $result['check'] = Upload::save($validation['image'], $filename, $directory);
             }
             else
             {

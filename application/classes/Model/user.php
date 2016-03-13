@@ -26,6 +26,11 @@ class Model_User extends Model_Auth_User {
      *
      * @var array Relationhips
      */
+    // has one - имеет один
+    // Пользователь может иметь только одну группу личных данных, а личные данные
+    // могут принадлежать только одному пользователю
+    // Пользователь может иметь только одну группу данных социальных сетей, а
+    // данные социальных сетей могут принадлежать только одному пользователю
     protected $_has_one = array(
 		'user_personal' => array(
 			'model' => 'User_Personal',
@@ -42,10 +47,25 @@ class Model_User extends Model_Auth_User {
      *
      * @var array Relationhips
      */
+    // has many - имеет много
+    // Пользователь может иметь много избранных статей, а избранная статья может
+    // принадлежать многим пользователям
+    // Пользователь может иметь много комментариев, но комментарий принадлежит
+    // только одному пользователю
+    // Пользователь может иметь много голосов, но голос принадлежит только одному
+    // пользователю
     protected $_has_many = array(
-        'favorites' => array(
+        'articles' => array(
             'model' => 'Article',
-            'through' => 'users_favorites',
+            'through' => 'users_articles',
+        ),
+        'comments' => array(
+            'model' => 'Article_comment',
+            'foreign_key' => 'user_id',
+        ),
+        'votes' => array(
+            'model' => 'Article_Comment_Vote',
+            'foreign_key' => 'user_id',
         ),
         'user_tokens' => array(
             'model' => 'User_Token',

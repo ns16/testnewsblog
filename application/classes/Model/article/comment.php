@@ -23,7 +23,7 @@ class Model_Article_Comment extends ORM {
 	// has many - имеет много
 	// Комментарий может иметь много голосов, но голос принадлежит только одному
 	// комментарию
-	// НЕ РАБОТАЕТ!!!
+	// Нужно использовать find_all()
 	protected $_has_many = array(
 		'votes' => array(
 			'model' => 'Article_Comment_Vote',

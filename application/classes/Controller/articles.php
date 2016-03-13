@@ -4,23 +4,28 @@ class Controller_Articles extends Controller_Content {
 
     public function action_index()
     {
-        $article = ORM::factory('article', 1);
-        $comments = $article->comments;
-        $users = $article->users;
+        $user = ORM::factory('User', 1);
 
-        var_dump($article->as_array());
-        var_dump($comments);
-        var_dump($users);
+        $comments = $user->comments;
+        $votes    = $comments->votes;
 
-//        $comment = ORM::factory('article_comment', 1);
-//        $article = $comment->article;
-//        $user = $comment->user;
-//        $votes = $comment->votes;//НЕ РАБОТАЕТ!!!
-//
-//        var_dump($comment->as_array());
-//        var_dump($article->as_array());
-//        var_dump($user->as_array());
-//        var_dump($votes->as_array());
+        echo '<p>Оставленные комментарии: '.$comments->find_all()->count().'</p>';
+        echo '<p>Полученные голоса: '.$votes->find_all()->count().'</p>';
+
+
+        $comments = ORM::factory('Article_Comment')
+            ->where('user_id', '=', 1);
+        $votes    = $comments->votes;
+
+        var_dump($votes->find_all());
+
+        foreach ($votes->find_all() as $vote) {
+            echo $vote->id.'<br>';
+        }
+
+        echo '<p>Оставленные комментарии: '.$comments->find_all()->count().'</p>';
+        echo '<p>Полученные голоса: '.$votes->find_all()->count().'</p>';
+
 
         exit;
 

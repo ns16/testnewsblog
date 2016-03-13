@@ -23,10 +23,11 @@ class Model_Article_Comment extends ORM {
 	// has many - имеет много
 	// Комментарий может иметь много голосов, но голос принадлежит только одному
 	// комментарию
+	// НЕ РАБОТАЕТ!!!
 	protected $_has_many = array(
 		'votes' => array(
-			'model' => 'Article',
-			'foreign_key' => 'article_id',
+			'model' => 'Article_Comment_Vote',
+			'foreign_key' => 'comment_id',
 		)
 	);
 }

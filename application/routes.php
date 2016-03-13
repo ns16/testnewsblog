@@ -5,19 +5,11 @@
  * defaults for the URI.
  */
 
-//Route::set('user_profile', 'user/profile(/<action>(/<id>))')
-//	->defaults(array(
-//		'directory'  => 'user',
-//		'controller' => 'profile',
-//		'action'     => 'index',
-//	));
-//
-//Route::set('user_settings', 'user/settings(/<action>(/<id>))')
-//	->defaults(array(
-//		'directory'  => 'user',
-//		'controller' => 'settings',
-//		'action'     => 'personal',
-//	));
+Route::set('user', 'user/form(/<id>)')
+	->defaults(array(
+		'controller' => 'user',
+		'action'     => 'form',
+	));
 
 Route::set('user_default', 'user(/<controller>(/<action>(/<id>)))')
 	->defaults(array(

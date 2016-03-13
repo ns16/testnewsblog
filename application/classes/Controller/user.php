@@ -4,7 +4,6 @@ class Controller_User extends Controller_Body {
 
     public function action_form()
     {
-        $message = '';
         $errors = array();
 
         $view = View::factory('user/form');
@@ -21,18 +20,22 @@ class Controller_User extends Controller_Body {
             throw new HTTP_Exception_404;
         }
 
+        // Get values of POST array
+        $post = $this->request->post();
+
+        // Get username and email from post
+        $username = Arr::get($post, 'username');
+        $email = Arr::get($post, 'email');
+
         // Check that HTTP method is POST
         if (HTTP_Request::POST == $this->request->method())
         {
-            // Get values from POST array
-            $post = $this->request->post();
-
             // Create object of Validation class
-            $validation = Validation::factory($this->request->post());
+            $validation = Validation::factory($post);
 
-            // Set labels for fields
+            // Set labels for fields, otherwise error will be get
             $validation
-                ->label('username', 'Имя')
+                ->label('username', 'Имя пользователя')
                 ->label('email', 'E-mail')
                 ->label('password', 'Пароль')
                 ->label('password_confirm', 'Подтверждение пароля')
@@ -45,7 +48,7 @@ class Controller_User extends Controller_Body {
                 ->rule('email', 'email')
                 ->rule('email', 'max_length', array(':value', 254))
                 ->rule('password', 'matches', array(
-                    ':data',
+                    ':validation',
                     ':field',
                     'password_confirm'
                 ))
@@ -79,13 +82,17 @@ class Controller_User extends Controller_Body {
                         )));
                     }
 
+                    // Login new user
+                    Auth::instance()->login(
+                        $post['username'],
+                        $post['password']
+                    );
+
                     // Redirect to view articles page
-                    $this->redirect(URL::site('articles'));
+                    $this->redirect(URL::get_default_url('articles'));
                 }
                 catch (ORM_Validation_Exception $e)
                 {
-                    // Set message error
-                    $message = 'Ошибка регистрации!';
                     // Get messages about errors
                     $errors = $e->errors($e->alias());
                 }
@@ -97,13 +104,10 @@ class Controller_User extends Controller_Body {
             }
         }
 
-        // Get arithmetic task
-        $task = Captcha::arithmetic_task();
-
         $view->set(array(
-            'message' => $message,
-            'errors'  => $errors,
-            'task'    => $task,
+            'errors'   => $errors,
+            'username' => $username,
+            'email'    => $email,
         ));
 
         $links = array(

@@ -9,7 +9,7 @@
         <form id="container-form-main" action="" method="post">
             <div class="form-group">
                 <label for="username">Имя</label>
-                <input id="username" class="form-control" type="text" name="username" value="<?= $username; ?>">
+                <input id="username" class="form-control" type="text" value="<?= $username; ?>" name="username">
                 <span class='text-danger'><?= Arr::get($errors, 'username'); ?></span>
             </div>
 
@@ -29,7 +29,7 @@
         </form>
 
         <div id="container-form-prompt" class="text-center">
-            <span>Еще не зарегистрированы? </span><?= HTML::anchor('/user/form', 'Регистрация', array('class' => 'btn btn-default')); ?>
+            <span>Еще не зарегистрированы? </span><?= HTML::anchor(URL::get_default_url('user', 'form'), 'Регистрация', array('class' => 'btn btn-default')); ?>
         </div>
     </div>
 </div>

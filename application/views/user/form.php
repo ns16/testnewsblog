@@ -9,7 +9,7 @@
         <form id="container-form-main" action="" method="post">
             <div class="form-group">
                 <label for="username">Имя</label>
-                <input id="username" class="form-control" type="text" name="username">
+                <input id="username" class="form-control" type="text" value="<?=  $username; ?>" name="username">
                 <div class="text-danger">
                     <?= Arr::get($errors, 'username'); ?>
                 </div>
@@ -17,7 +17,7 @@
 
             <div class="form-group">
                 <label for="email">Адрес электронной почты</label>
-                <input id="email" class="form-control" type="text" name="email">
+                <input id="email" class="form-control" type="text" value="<?=  $email; ?>" name="email">
                 <div class="text-danger">
                     <?= Arr::get($errors, 'email'); ?>
                 </div>
@@ -40,7 +40,7 @@
             </div>
 
             <div class="form-group">
-                <label for="captcha">Введите в поле ответ на пример: <br><?= $task; ?></label>
+                <label for="captcha">Введите в поле ответ на пример: <br><?= Captcha::arithmetic_task(); ?></label>
                 <input id="captcha" class="form-control" type="text" name="captcha">
                 <div class="text-danger">
                     <?= Arr::get($errors, 'captcha'); ?>
@@ -51,7 +51,7 @@
         </form>
 
         <div id="container-form-prompt" class="text-center">
-            <span>Есть аккаунт? </span><?= HTML::anchor('/auth/login', 'Вход', array('class' => 'btn btn-default')); ?>
+            <span>Есть аккаунт? </span><?= HTML::anchor(URL::get_default_url('auth', 'login'), 'Вход', array('class' => 'btn btn-default')); ?>
         </div>
     </div>
 </div>

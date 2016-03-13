@@ -3,7 +3,7 @@
 class Files  {
 
     private static $filename  = 'avatar-{$id}.png';
-    private static $directory = '/media/images/avatars';
+    private static $directory = 'media/images/avatars';
 
     private static function get_filename($id)
     {
@@ -17,7 +17,7 @@ class Files  {
 
     public static function display($id)
     {
-        return '<a href="'.URL::get_user_default_url('profile', 'index', $id).'"><img src="'.self::$directory.'/'.self::get_filename($id).'" alt=""></a>';
+        return '<a href="'.URL::get_user_default_url('profile', 'index', $id).'"><img src="/'.self::$directory.'/'.self::get_filename($id).'" alt=""></a>';
     }
 
     public static function upload($id)

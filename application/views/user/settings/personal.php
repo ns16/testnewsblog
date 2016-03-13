@@ -18,7 +18,7 @@
                     <option value="0">--</option>
                     <? foreach ($years as $year): ?>
                         <option value="<?= $year; ?>"
-                            <? if ($settings['year'] == $year): ?>
+                            <? if (Arr::get($settings, 'year') == $year): ?>
                                 selected="selected"
                             <? endif; ?>
                         ><?= $year; ?></option>
@@ -28,7 +28,7 @@
                     <option value="0">--</option>
                     <? foreach ($months as $month => $month_name): ?>
                         <option value="<?= $month; ?>"
-                            <? if ($settings['month'] == $month): ?>
+                            <? if (Arr::get($settings, 'month') == $month): ?>
                                 selected="selected"
                             <? endif; ?>
                         ><?= $month_name; ?></option>
@@ -38,7 +38,7 @@
                     <option value="0">--</option>
                     <? foreach ($days as $day): ?>
                         <option value="<?= $day; ?>"
-                            <? if ($settings['day'] == $day): ?>
+                            <? if (Arr::get($settings, 'day') == $day): ?>
                                 selected="selected"
                             <? endif; ?>
                         ><?= $day; ?></option>
@@ -100,7 +100,7 @@
         </div>
 
         <div id="container-personal-buttons"  class="form-group">
-            <a href="<?= URL::site('user/profile/index/'.$user_id); ?>" class="btn btn-default">Отменить</a>
+            <a href="<?= URL::get_user_default_url('profile', 'index', $user_id); ?>" class="btn btn-default">Отменить</a>
             <input class="btn btn-default" type="submit" value="Сохранить" name="">
         </div>
     </form>

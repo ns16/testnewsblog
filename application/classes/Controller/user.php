@@ -52,6 +52,7 @@ class Controller_User extends Controller_Body {
                     ':field',
                     'password_confirm'
                 ))
+                ->rule('password', 'min_length', array(':value', 3))
                 ->rule('password', 'max_length', array(':value', 64))
                 ->rule('captcha', 'captcha');
 

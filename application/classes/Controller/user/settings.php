@@ -166,10 +166,11 @@ class Controller_User_Settings extends Controller_User_Base {
                 ->rule('email', 'email')
                 ->rule('email', 'max_length', array(':value', 254))
                 ->rule('password', 'matches', array(
-                    ':data',
+                    ':validation',
                     ':field',
                     'password_confirm',
                 ))
+                ->rule('password', 'min_length', array(':value', 3))
                 ->rule('password', 'max_length', array(':value', 64));
 
             // Check that validation rules are made
@@ -214,6 +215,7 @@ class Controller_User_Settings extends Controller_User_Base {
                 $errors = $validation->errors('validation');
             }
 
+            // Merge arrays of errors
             $errors = Arr::merge($errors, $result['errors']);
         }
 
@@ -225,7 +227,7 @@ class Controller_User_Settings extends Controller_User_Base {
             // Overwrite settings array by post array
             $settings = Arr::overwrite($settings, $post);
         }
-        var_dump($settings);//exit;
+
         $view->set(array(
             'settings' => $settings,
             'errors'   => $errors,

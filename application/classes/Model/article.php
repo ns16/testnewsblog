@@ -4,10 +4,11 @@ class Model_Article extends ORM {
 
     protected $_table_name = 'articles';
 
+    // has many -
     protected $_has_many = array(
         'user' => array(
-            'model' => 'user',
-            'through' => 'users_articles',
+            'model' => 'User',
+            'through' => 'users_favorites',
         )
     );
 }

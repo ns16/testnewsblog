@@ -2,7 +2,7 @@
 
 class Controller_Votes extends Controller {
 
-    const VOTE_UP = 1;
+    const VOTE_UP   = 1;
     const VOTE_DOWN = -1;
 
     public function action_up()

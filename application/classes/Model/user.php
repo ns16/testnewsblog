@@ -28,11 +28,11 @@ class Model_User extends Model_Auth_User {
      */
     protected $_has_one = array(
 		'user_personal' => array(
-			'model' => 'user_personal',
+			'model' => 'User_Personal',
 			'foreign_key' => 'user_id',
 		),
         'user_social' => array(
-            'model' => 'user_social',
+            'model' => 'User_Social',
             'foreign_key' => 'user_id',
         ),
 	);
@@ -43,9 +43,9 @@ class Model_User extends Model_Auth_User {
      * @var array Relationhips
      */
     protected $_has_many = array(
-        'article' => array(
-            'model' => 'article',
-            'through' => 'users_articles',
+        'favorites' => array(
+            'model' => 'Article',
+            'through' => 'users_favorites',
         ),
         'user_tokens' => array(
             'model' => 'User_Token',
@@ -70,6 +70,7 @@ class Model_User extends Model_Auth_User {
             'email' => array(
                 array('not_empty'),
                 array('email'),
+                array('max_length', array(':value', 254)),
                 array(array($this, 'unique'), array('email', ':value')),
             ),
         );

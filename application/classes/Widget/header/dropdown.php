@@ -6,8 +6,7 @@ class Widget_Header_Dropdown extends Widget {
     {
         $view = View::factory('widget/header/dropdown');
 
-        $user = Auth::instance()->get_user();
-        $view->set('user', $user);
+        $view->set('user', $this->user);
 
         return $view;
     }

@@ -7,10 +7,17 @@ abstract class Widget {
      */
     protected static $prefix = 'Widget';
 
+    /**
+     * @var  Model_User|NULL  user model
+     */
+    protected $user = NULL;
+
     public static function factory($name, array $params = array())
     {
         $widget_name = static::$prefix . '_' . Text::ucfirst($name, '_');
         $widget = new $widget_name($params);
+
+        $widget->user = Auth::instance()->get_user();
 
         return $widget->run();
     }

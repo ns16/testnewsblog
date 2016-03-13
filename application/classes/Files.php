@@ -2,12 +2,12 @@
 
 class Files  {
 
-    private static $filename  = 'avatar-{$id}.png';
+    private static $filename  = 'avatar-{id}.png';
     private static $directory = 'media/images/avatars';
 
     private static function get_filename($id)
     {
-        return str_replace('{$id}', $id, self::$filename);
+        return str_replace('{id}', $id, self::$filename);
     }
 
     private static function get_directory()

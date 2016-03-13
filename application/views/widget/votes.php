@@ -11,7 +11,7 @@
         <?= $count_votes; ?>
     </span>
     <? if ($current_user_id !== $user_id): ?>
-        <a href="<?= '/votes/up/'.URL::query(
+        <a href="<?= URL::get_default_url('votes', 'up').URL::query(
             array(
                 'article_id' => $article_id,
                 'comment_id' => $comment_id,
@@ -19,7 +19,7 @@
             )); ?>" class="comment-votes-up btn btn-default">
             <span class="glyphicon glyphicon-thumbs-up"></span>
         </a>
-        <a href="<?= '/votes/down/'.URL::query(
+        <a href="<?= URL::get_default_url('votes', 'down').URL::query(
             array(
                 'article_id' => $article_id,
                 'comment_id' => $comment_id,

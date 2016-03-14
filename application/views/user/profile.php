@@ -1,14 +1,14 @@
 <div id="container">
-    <div class="block">
-        <div id="container-avatar" class="col-md-3">
+    <div id="information" class="block">
+        <div id="information-avatar" class="col-md-3">
             <?= Files::display($user_id); ?>
         </div>
-        <div id="container-personal" class="col-md-6">
+        <div id="information-personal" class="col-md-6">
             <div class="col-md-12">
                 <h3><?= $username; ?></h3>
             </div>
             <? foreach ($personal_data as $key => $value): ?>
-                <div class="container-personal-item col-md-12">
+                <div class="information-personal-item col-md-12">
                     <span class="col-md-3">
                         <?= $key; ?>:
                     </span>
@@ -18,12 +18,12 @@
                 </div>
             <? endforeach; ?>
         </div>
-        <div id="container-social" class="col-md-3">
-            <div id="container-social-block">
-                <a href="<?= URL::get_user_default_url('settings', 'personal', $user_id); ?>" id="container-social-button" class="btn btn-default">Настройки</a>
+        <div id="information-social" class="col-md-3">
+            <div id="information-social-block">
+                <a href="<?= URL::get_user_default_url('settings', 'personal', $user_id); ?>" id="information-social-button" class="btn btn-default">Настройки</a>
                 <? foreach ($social_data as $key => $value): ?>
                     <? if ($value): ?>
-                        <a href="<?= $value; ?>" class="container-social-icons btn btn-default">
+                        <a href="<?= $value; ?>" class="information-social-icons btn btn-default">
                             <span class="<?= $key; ?>"></span>
                         </a>
                     <? endif; ?>
@@ -31,7 +31,7 @@
             </div>
         </div>
     </div>
-    <div class="block">
+    <div id="statistic" class="block">
         <div class="col-md-4">
             <span class="glyphicon glyphicon-flash"></span>
             <span>Рейтинг:</span>
@@ -54,28 +54,52 @@
             </span>
         </div>
     </div>
-    <div class="block">
+    <div id="comments" class="block col-md-12">
         <h4>Комментарии к статьям</h4>
         <? foreach($comments as $comment): ?>
+            <? $sum_votes = $comment->votes->get_sum_votes_comment(); ?>
             <div class="comment">
-                <div class="comment-date"><?= $comment->date; ?></div>
-                <div class="comment-votes"><?= $comment->votes->get_sum_votes_comment(); ?></div>
-                <div class="comment-content"><?= $comment->content; ?></div>
-                <div class="comment-article">К статье: <a href="<?= URL::get_default_url('articles', 'index', $comment->article->id); ?>"><?= $comment->article->title; ?></a></div>
+                <div class="thumbnail">
+                    <div class="comment-info">
+                        <div class="comment-info-date">
+                            <?= $comment->date; ?>
+                        </div>
+                        <div class="comment-info-votes
+                            <? if ($sum_votes > 0): ?>
+                                text-success
+                            <? elseif ($sum_votes < 0): ?>
+                                text-danger
+                            <? endif; ?>
+                        ">
+                            <span><?= $sum_votes; ?></span>
+                            <span class="glyphicon glyphicon-flash"></span>
+                        </div>
+                    </div>
+                    <div class="comment-content">
+                        <?= $comment->content; ?>
+                    </div>
+                    <div class="comment-article">
+                        <span>К статье: </span>
+                        <a href="<?= URL::get_default_url('articles', 'index', $comment->article->id); ?>"><?= $comment->article->title; ?></a>
+                    </div>
+                </div>
             </div>
         <? endforeach; ?>
     </div>
-    <div class="block">
+    <div id="articles" class="block col-md-12">
         <h4>Избранные статьи</h4>
         <? foreach($articles as $article): ?>
-            <div class="col-sm-6 col-md-3">
+            <div class="article">
                 <div class="thumbnail">
                     <img src="http://fakeimg.pl/260x180/EEEEEE/AAA/?text=260x180" alt="">
-                    <div class="caption">
-                        <p><?= $article->title; ?></p>
-                        <p>
+                    <div class="article-caption">
+                        <div class="article-caption-title">
+                            <?= $article->title; ?>
+                        </div>
+                        <div class="article-caption-buttons">
                             <a href="<?= URL::get_default_url('articles', 'index', $article->id) ?>" class="btn btn-default">Подробнее</a>
-                        </p>
+                            <a href="<?= URL::get_default_url('articles', 'index', $article->id) ?>" class="btn btn-default">Удалить</a>
+                        </div>
                     </div>
                 </div>
             </div>

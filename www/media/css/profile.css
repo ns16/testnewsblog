@@ -2,40 +2,37 @@
     margin-bottom: 25px;
     overflow: hidden;
 }
-/*.block > div {
-     border: 1px solid black;
-}*/
 
-#container-avatar {
-    /*padding: 0;*/
+#information-avatar {
+
 }
-#container-avatar > a {
+#information-avatar > a {
     display: inline-block;
 }
-#container-avatar > a > img {
+#information-avatar > a > img {
     width: 200px;
 }
 
-#container-personal {
+#information-personal {
 
 }
-#container-personal > div > h3 {
+#information-personal > div > h3 {
     margin: 0 0 10px 0;
 }
-.container-personal-item {
+.information-personal-item {
     margin-bottom: 5px;
     overflow: hidden;
 }
-.container-personal-item > span {
+.information-personal-item > span {
     padding: 0;
 }
 
-#container-social-block {
+#information-social-block {
     float: right;
     width: 200px;
     font-size: 0;
 }
-#container-social-block > a {
+#information-social-block > a {
     display: inline-block;
     width: 40px;
     height: 34px;
@@ -43,10 +40,10 @@
     margin: 0 10px 10px 0;
     text-align: center;
 }
-.container-social-icons:nth-of-type(3n) {
+.information-social-icons:nth-of-type(3n) {
     margin-right: 0;
 }
-#container-social-block > a > span::before {
+#information-social-block > a > span::before {
     font-family: "FontAwesome";
     font-size: 18px;
     color: #000;
@@ -58,14 +55,73 @@
 .profile_tw::before {content: "\f099";}
 .profile_ok::before {content: "\f263";}
 
-#container-social-button {
+#information-social-button {
     display: block !important;
     width: auto !important;
     height: auto !important;
     margin-right: 0;
 }
 
+#comments {
+    font-size: 0;
+    text-align: justify;
+    text-justify: newspaper;
+}
+#comments::after {
+    content: "";
+    display: inline-block;
+    width: 100%;
+}
 .comment {
-    background-color: gainsboro;
-    margin-top: 10px;
+    display: inline-block;
+    width: 560px;
+    text-align: left;
+    vertical-align: top;
+    font-size: 14px;
+}
+.comment-info {
+    overflow: hidden;
+}
+.comment-info-date {
+    float: left;
+    width: 500px;
+}
+.comment-info-votes {
+    float: right;
+    width: 50px;
+    text-align: right;
+}
+.comment-content {
+    margin: 10px 0;
+}
+
+#articles {
+    font-size: 0;
+    text-align: justify;
+    text-justify: newspaper;
+}
+#articles::after {
+    content: "";
+    display: inline-block;
+    width: 100%;
+}
+.article {
+    display: inline-block;
+    width: 270px;
+    text-align: left;
+    vertical-align: top;
+    font-size: 14px;
+}
+.article-caption-title {
+    margin: 10px 0;
+}
+.article-caption-buttons {
+    font-size: 0;
+}
+.article-caption-buttons > a {
+    width: 100px;
+    font-size: 14px;
+}
+.article-caption-buttons > a:first-of-type {
+    margin-right: 5px;
 }

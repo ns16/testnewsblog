@@ -1,13 +1,11 @@
 <div class="comment-votes">
-    <span
+    <span class="comment-votes-count
         <? if ($sum_votes > 0): ?>
-            class="comment-votes-count text-success"
-        <? elseif($sum_votes < 0): ?>
-            class="comment-votes-count text-danger"
-        <? else: ?>
-            class="comment-votes-count"
+            text-success
+        <? elseif ($sum_votes < 0): ?>
+            text-danger
         <? endif; ?>
-    >
+    ">
         <?= $sum_votes; ?>
     </span>
     <? if ($current_user_id !== $comment->user_id): ?>

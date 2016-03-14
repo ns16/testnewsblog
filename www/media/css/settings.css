@@ -29,6 +29,7 @@
 #container-personal-buttons > a,
 #container-personal-buttons > input{
     width: 100px;
+    font-size: 14px;
 }
 #container-personal-buttons > a {
     margin-right: 25px;

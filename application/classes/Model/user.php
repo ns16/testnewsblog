@@ -60,7 +60,7 @@ class Model_User extends Model_Auth_User {
             'through' => 'users_articles',
         ),
         'comments' => array(
-            'model' => 'Article_comment',
+            'model' => 'Article_Comment',
             'foreign_key' => 'user_id',
         ),
         'votes' => array(

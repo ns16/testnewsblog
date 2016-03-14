@@ -1,29 +1,29 @@
 <div class="comment-votes">
     <span
-        <? if ($count_votes > 0): ?>
+        <? if ($sum_votes > 0): ?>
             class="comment-votes-count text-success"
-        <? elseif($count_votes < 0): ?>
+        <? elseif($sum_votes < 0): ?>
             class="comment-votes-count text-danger"
         <? else: ?>
             class="comment-votes-count"
         <? endif; ?>
     >
-        <?= $count_votes; ?>
+        <?= $sum_votes; ?>
     </span>
-    <? if ($current_user_id !== $user_id): ?>
+    <? if ($current_user_id !== $comment->user_id): ?>
         <a href="<?= URL::get_default_url('votes', 'up').URL::query(
             array(
-                'article_id' => $article_id,
-                'comment_id' => $comment_id,
-                'user_id'    => $user_id,
+                'article_id' => $comment->article_id,
+                'comment_id' => $comment->id,
+                'user_id'    => $comment->user_id,
             )); ?>" class="comment-votes-up btn btn-default">
             <span class="glyphicon glyphicon-thumbs-up"></span>
         </a>
         <a href="<?= URL::get_default_url('votes', 'down').URL::query(
             array(
-                'article_id' => $article_id,
-                'comment_id' => $comment_id,
-                'user_id'    => $user_id,
+                'article_id' => $comment->article_id,
+                'comment_id' => $comment->id,
+                'user_id'    => $comment->user_id,
             )); ?>" class="comment-votes-down btn btn-default">
             <span class="glyphicon glyphicon-thumbs-down"></span>
         </a>
@@ -33,8 +33,8 @@
 
     var buttons = document.getElementsByClassName("btn");
 
-    var comment_id = <?= $comment_id; ?>;
-    var user_id = <?= $user_id; ?>;
+    var comment_id = <?= $comment->id; ?>;
+    var user_id = <?= $comment->user_id; ?>;
     var vote = null;
 
 //    for(var i = 0; i < buttons.length; i++)

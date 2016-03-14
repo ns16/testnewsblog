@@ -15,9 +15,50 @@ class Controller_User_Profile extends Controller_User_Base {
 
         $view = View::factory('user/profile');
 
-        $view
-            ->set('errors', $errors)
-            ->set('user_id', $this->user_id);
+        // Get model of user with given id
+        $user = ORM::factory('User', $this->user_id);
+
+        // Get personal and account data
+        $personal_data = $user->user_personal->as_array();
+
+        $labels = array_values($user->user_personal->labels());
+        $personal_data = array_combine($labels, $personal_data);
+
+        unset($personal_data['Идентификатор']);
+
+        $account_data = $user->as_array();
+        $social_data = $user->user_social->as_array();
+
+        unset($social_data['user_id']);
+
+        // Get articles and comments
+        $comments = $user->comments->find_all();
+        $articles = $user->articles->find_all();
+
+        // Get number of comments and favorite articles
+        $comments_count = $comments->count();
+        $articles_count = $user->articles->find_all()->count();
+
+        // Get number of votes
+        $sum_votes = Model_Article_Comment_Vote::get_sum_votes_user($this->user_id);
+
+        $view->set(array(
+            'errors'         => $errors,
+            'user_id'        => $this->user_id,
+            'username'       => $user->username,
+            'personal_data'  => $personal_data,
+            'account_data'   => $account_data,
+            'social_data'    => $social_data,
+            'comments'       => $comments,
+            'articles'       => $articles,
+            'comments_count' => $comments_count,
+            'articles_count' => $articles_count,
+            'sum_votes'      => $sum_votes,
+        ));
+
+
+//            ->set('errors', $errors)
+//            ->set('user_id', $this->user_id);
 
         $links = array(
             'media/css/style.css',

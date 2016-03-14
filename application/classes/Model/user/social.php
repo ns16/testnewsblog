@@ -60,7 +60,7 @@ class Model_User_Social extends ORM {
     public function labels()
     {
         return array(
-            'user_id'    => 'Пользователь',
+            'user_id'    => 'Идентификатор',
             'profile_vk' => 'Вконтакте',
             'profile_fb' => 'Facebook',
             'profile_gp' => 'Google+',

@@ -62,7 +62,7 @@ class Model_User_Personal extends ORM {
     public function labels()
     {
         return array(
-            'user_id'   => 'Пользователь',
+            'user_id'   => 'Идентификатор',
             'name'      => 'Имя пользователя',
             'birthdate' => 'Дата рождения',
             'sex'       => 'Пол',

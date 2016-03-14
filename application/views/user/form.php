@@ -1,10 +1,5 @@
 <div id="container">
     <div id="container-form" class="col-md-4">
-        <? if ($message): ?>
-            <div id="container-form-message" class="bg-danger">
-                <?= $message; ?>
-            </div>
-        <? endif; ?>
         <h3 id="container-form-title" class="text-center">Регистрация</h3>
         <form id="container-form-main" action="" method="post">
             <div class="form-group">

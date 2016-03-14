@@ -1,0 +1,71 @@
+.block {
+    margin-bottom: 25px;
+    overflow: hidden;
+}
+/*.block > div {
+     border: 1px solid black;
+}*/
+
+#container-avatar {
+    /*padding: 0;*/
+}
+#container-avatar > a {
+    display: inline-block;
+}
+#container-avatar > a > img {
+    width: 200px;
+}
+
+#container-personal {
+
+}
+#container-personal > div > h3 {
+    margin: 0 0 10px 0;
+}
+.container-personal-item {
+    margin-bottom: 5px;
+    overflow: hidden;
+}
+.container-personal-item > span {
+    padding: 0;
+}
+
+#container-social-block {
+    float: right;
+    width: 200px;
+    font-size: 0;
+}
+#container-social-block > a {
+    display: inline-block;
+    width: 40px;
+    height: 34px;
+    padding: 0;
+    margin: 0 10px 10px 0;
+    text-align: center;
+}
+.container-social-icons:nth-of-type(3n) {
+    margin-right: 0;
+}
+#container-social-block > a > span::before {
+    font-family: "FontAwesome";
+    font-size: 18px;
+    color: #000;
+    line-height: 32px;
+}
+.profile_vk::before {content: "\f189";}
+.profile_fb::before {content: "\f09a";}
+.profile_gp::before {content: "\f0d5";}
+.profile_tw::before {content: "\f099";}
+.profile_ok::before {content: "\f263";}
+
+#container-social-button {
+    display: block !important;
+    width: auto !important;
+    height: auto !important;
+    margin-right: 0;
+}
+
+.comment {
+    background-color: gainsboro;
+    margin-top: 10px;
+}

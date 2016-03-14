@@ -55,7 +55,7 @@ class Model_Article_Comment_Vote extends ORM {
             ->on('article_comments.id', '=', 'article_comment_votes.comment_id')
             ->where('users.id', '=', $user_id)
             ->execute()
-            ->get('sum_votes', NULL);
+            ->get('sum_votes', 0);
 
         return $result;
     }

@@ -5,7 +5,6 @@
 #container-personal .form-group > label {
     text-align: left;
 }
-
 #container-personal-birthdate {
     font-size: 0;
 }
@@ -47,6 +46,9 @@
 #container-account .form-group:nth-of-type(5) > label {
     padding-top: 0;
     margin-top: -3px;
+}
+#container-account-avatar > a {
+    display: inline-block;
 }
 #container-account-avatar > a > img {
     width: 215px;

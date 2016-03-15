@@ -1,38 +1,65 @@
+#container {
+    padding: 20px 15px 90px;
+}
 .block {
     margin-bottom: 25px;
     overflow: hidden;
 }
 
-#information-avatar {
+#information {
+    margin-bottom: 45px;
+}
+#information > div {
+    float: left;
+}
 
+#information-avatar {
+    width: 200px;
 }
 #information-avatar > a {
     display: inline-block;
 }
 #information-avatar > a > img {
+    display: block;
     width: 200px;
 }
 
 #information-personal {
-
+    width: 700px;
+    margin: 0 25px;
 }
-#information-personal > div > h3 {
+#information-personal > div {
+    overflow: hidden;
+}
+#information-personal-title > h3 {
     margin: 0 0 10px 0;
 }
 .information-personal-item {
     margin-bottom: 5px;
-    overflow: hidden;
 }
 .information-personal-item > span {
-    padding: 0;
+    float: left;
+    width: 75%;
+}
+.information-personal-item > span:first-of-type {
+    width: 25%;
 }
 
-#information-social-block {
-    float: right;
-    width: 200px;
+#information-social {
+    width: 190px;
+}
+#information-social-button {
+    margin-bottom: 10px;
+}
+#information-social-button > a {
+    display: block;
+    width: 100%;
+    height: 34px;
+}
+#information-social-icons {
     font-size: 0;
 }
-#information-social-block > a {
+#information-social-icons > a {
     display: inline-block;
     width: 40px;
     height: 34px;
@@ -40,10 +67,10 @@
     margin: 0 10px 10px 0;
     text-align: center;
 }
-.information-social-icons:nth-of-type(3n) {
-    margin-right: 0;
+#information-social-icons > a:nth-of-type(4n) {
+    margin: 0 0 10px 0;
 }
-#information-social-block > a > span::before {
+#information-social-icons > a > span::before {
     font-family: "FontAwesome";
     font-size: 18px;
     color: #000;
@@ -55,17 +82,18 @@
 .profile_tw::before {content: "\f099";}
 .profile_ok::before {content: "\f263";}
 
-#information-social-button {
-    display: block !important;
-    width: auto !important;
-    height: auto !important;
-    margin-right: 0;
+#statistic {
+    margin-bottom: 45px;
+}
+.statistic-item {
+    float: left;
+    width: 33.3%;
 }
 
 #comments {
-    font-size: 0;
     text-align: justify;
     text-justify: newspaper;
+    font-size: 0;
 }
 #comments::after {
     content: "";
@@ -82,13 +110,14 @@
 .comment-info {
     overflow: hidden;
 }
-.comment-info-date {
+.comment-info > div {
     float: left;
-    width: 500px;
+}
+.comment-info-date {
+    width: 90%;
 }
 .comment-info-votes {
-    float: right;
-    width: 50px;
+    width: 10%;
     text-align: right;
 }
 .comment-content {
@@ -97,20 +126,16 @@
 
 #articles {
     font-size: 0;
-    text-align: justify;
-    text-justify: newspaper;
-}
-#articles::after {
-    content: "";
-    display: inline-block;
-    width: 100%;
 }
 .article {
     display: inline-block;
     width: 270px;
-    text-align: left;
+    margin-right: 20px;
     vertical-align: top;
     font-size: 14px;
+}
+.article:nth-of-type(4n) {
+    margin-right: 0;
 }
 .article-caption-title {
     margin: 10px 0;
@@ -119,9 +144,9 @@
     font-size: 0;
 }
 .article-caption-buttons > a {
-    width: 100px;
+    width: 125px;
     font-size: 14px;
 }
 .article-caption-buttons > a:first-of-type {
-    margin-right: 5px;
+    margin-right: 10px;
 }

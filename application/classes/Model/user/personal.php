@@ -72,11 +72,18 @@ class Model_User_Personal extends ORM {
         );
     }
 
-    public static function get_sexes()
+    public static function get_sexes($sex = NULL)
     {
-        return array(
+        $sexes = array(
             self::MALE   => 'Мужской',
             self::FEMALE => 'Женский',
         );
+
+        if (Valid::digit($sex))
+        {
+            return Arr::get($sexes, $sex);
+        }
+
+        return $sexes;
     }
 }

@@ -18,14 +18,19 @@ class Controller_User_Profile extends Controller_User_Base {
         // Get model of user with given id
         $user = ORM::factory('User', $this->user_id);
 
-        // Get personal and account data
+        // Get personal data of user
         $personal_data = $user->user_personal->as_array();
 
+        // Get sex of user as string
+        $personal_data['sex'] = Model_User_Personal::get_sexes($personal_data['sex']);
+
+        // Replace keys of personal data array
         $labels = array_values($user->user_personal->labels());
         $personal_data = array_combine($labels, $personal_data);
 
         unset($personal_data['Идентификатор']);
 
+        // Get account and social networks data of user
         $account_data = $user->as_array();
         $social_data = $user->user_social->as_array();
 
@@ -37,7 +42,7 @@ class Controller_User_Profile extends Controller_User_Base {
 
         // Get number of comments and favorite articles
         $comments_count = $comments->count();
-        $articles_count = $user->articles->find_all()->count();
+        $articles_count = $articles->count();
 
         // Get number of votes
         $sum_votes = Model_Article_Comment_Vote::get_sum_votes_user($this->user_id);
@@ -55,10 +60,6 @@ class Controller_User_Profile extends Controller_User_Base {
             'articles_count' => $articles_count,
             'sum_votes'      => $sum_votes,
         ));
-
-
-//            ->set('errors', $errors)
-//            ->set('user_id', $this->user_id);
 
         $links = array(
             'media/css/style.css',

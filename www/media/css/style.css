@@ -62,6 +62,9 @@ textarea {
     margin-left: 350px;
     overflow: hidden;
 }
+#content-article-favorite {
+    float: right;
+}
 #content-comments > h4 {
     margin-top: 25px;
 }

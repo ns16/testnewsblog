@@ -30,9 +30,24 @@ class Controller_Articles extends Controller_Content {
                 ->find();
         }
 
-        $view->set('article', $article);
+//        $favorite = Request::factory('articles/favorite')->execute();
+
+        $view->set(array(
+            'article'  => $article,
+//            'favorite' => $favorite,
+        ));
 
         $this->content->article = $view;
+    }
+
+    public function action_favorite()
+    {
+        $view = View::factory('articles/favorite');
+
+        // Get model of article
+//        $article = ORM::factory('article');
+
+        $this->response->body($view);
     }
 
 } // End Articles

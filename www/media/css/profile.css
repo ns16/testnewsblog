@@ -123,6 +123,10 @@
 .comment-content {
     margin: 10px 0;
 }
+#comments-message {
+    text-align: center;
+    font-size: 14px;
+}
 
 #articles {
     font-size: 0;
@@ -149,4 +153,8 @@
 }
 .article-caption-buttons > a:first-of-type {
     margin-right: 10px;
+}
+#articles-message {
+    text-align: center;
+    font-size: 14px;
 }

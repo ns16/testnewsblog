@@ -7,6 +7,14 @@ class Controller_User_Profile extends Controller_User_Base {
         $this->user_id = $this->request->param('id');
 
         parent::before();
+
+        $links = array(
+            'media/css/style.css',
+            'media/css/profile.css',
+        );
+
+        $this->template->title = 'Мой профиль';
+        $this->template->links = $links;
     }
 
     public function action_index()
@@ -22,7 +30,7 @@ class Controller_User_Profile extends Controller_User_Base {
         $personal_data = $user->user_personal->as_array();
 
         // Get sex of user as string
-        $personal_data['sex'] = Model_User_Personal::get_sexes($personal_data['sex']);
+        $personal_data['sex'] = Model_User_Personal::get_sex_name($personal_data['sex']);
 
         // Replace keys of personal data array
         $labels = array_values($user->user_personal->labels());
@@ -61,13 +69,6 @@ class Controller_User_Profile extends Controller_User_Base {
             'sum_votes'      => $sum_votes,
         ));
 
-        $links = array(
-            'media/css/style.css',
-            'media/css/profile.css',
-        );
-
-        $this->template->title = 'Мой профиль';
-        $this->template->links = $links;
         $this->body->container = $view;
     }
 

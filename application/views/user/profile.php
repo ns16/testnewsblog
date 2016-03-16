@@ -1,17 +1,19 @@
 <div id="container">
     <div id="information" class="block">
         <div id="information-avatar">
-            <?= Files::display($user_id); ?>
+            <?= Files::display($user_id, TRUE); ?>
         </div>
         <div id="information-personal">
             <div id="information-personal-title">
                 <h3><?= $username; ?></h3>
             </div>
             <? foreach ($personal_data as $key => $value): ?>
-                <div class="information-personal-item">
-                    <span><?= $key; ?>:</span>
-                    <span><?= $value; ?></span>
-                </div>
+                <? if ($value): ?>
+                    <div class="information-personal-item">
+                        <span><?= $key; ?>:</span>
+                        <span><?= $value; ?></span>
+                    </div>
+                <? endif; ?>
             <? endforeach; ?>
         </div>
         <div id="information-social">
@@ -48,38 +50,43 @@
     </div>
     <div id="comments" class="block">
         <h4>Комментарии к статьям</h4>
-        <? foreach($comments as $comment): ?>
-            <? $sum_votes = $comment->votes->get_sum_votes_comment(); ?>
-            <div class="comment">
-                <div class="thumbnail">
-                    <div class="comment-info">
-                        <div class="comment-info-date">
-                            <?= $comment->date; ?>
+        <? if ($comments_count): ?>
+            <? foreach($comments as $comment): ?>
+                <? $sum_votes = $comment->votes->get_sum_votes_comment(); ?>
+                <div class="comment">
+                    <div class="thumbnail">
+                        <div class="comment-info">
+                            <div class="comment-info-date">
+                                <?= $comment->date; ?>
+                            </div>
+                            <div class="comment-info-votes
+                                <? if ($sum_votes > 0): ?>
+                                    text-success
+                                <? elseif ($sum_votes < 0): ?>
+                                    text-danger
+                                <? endif; ?>
+                            ">
+                                <span><?= $sum_votes; ?></span>
+                                <span class="glyphicon glyphicon-flash"></span>
+                            </div>
                         </div>
-                        <div class="comment-info-votes
-                            <? if ($sum_votes > 0): ?>
-                                text-success
-                            <? elseif ($sum_votes < 0): ?>
-                                text-danger
-                            <? endif; ?>
-                        ">
-                            <span><?= $sum_votes; ?></span>
-                            <span class="glyphicon glyphicon-flash"></span>
+                        <div class="comment-content">
+                            <?= $comment->content; ?>
                         </div>
-                    </div>
-                    <div class="comment-content">
-                        <?= $comment->content; ?>
-                    </div>
-                    <div class="comment-article">
-                        <span>К статье: </span>
-                        <a href="<?= URL::get_default_url('articles', 'index', $comment->article->id); ?>"><?= $comment->article->title; ?></a>
+                        <div class="comment-article">
+                            <span>К статье: </span>
+                            <a href="<?= URL::get_default_url('articles', 'index', $comment->article->id); ?>"><?= $comment->article->title; ?></a>
+                        </div>
                     </div>
                 </div>
-            </div>
-        <? endforeach; ?>
+            <? endforeach; ?>
+        <? else: ?>
+            <div id="comments-message">У вас нет комментариев к статьям</div>
+        <? endif; ?>
     </div>
     <div id="articles" class="block">
         <h4>Избранные статьи</h4>
+        <? if ($articles_count): ?>
         <? foreach($articles as $article): ?>
             <div class="article">
                 <div class="thumbnail">
@@ -96,5 +103,8 @@
                 </div>
             </div>
         <? endforeach; ?>
+        <? else: ?>
+            <div id="articles-message">У вас нет избранных статей</div>
+        <? endif; ?>
     </div>
 </div>

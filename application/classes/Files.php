@@ -3,6 +3,7 @@
 class Files  {
 
     private static $filename  = 'avatar-{id}.png';
+    private static $default_filename = 'no-avatar.png';
     private static $directory = 'media/images/avatars';
 
     private static function get_filename($id)
@@ -15,9 +16,19 @@ class Files  {
         return realpath(self::$directory).DIRECTORY_SEPARATOR;
     }
 
-    public static function display($id)
+    public static function display($id, $default = FALSE)
     {
-        return '<a href="'.URL::get_user_default_url('profile', 'index', $id).'"><img src="/'.self::$directory.'/'.self::get_filename($id).'" alt=""></a>';
+        $href = URL::get_user_default_url('profile', 'index', $id);
+        $src  = URL::site(self::$directory).'/'.self::get_filename($id);
+
+//        var_dump($href, $src, !file_exists($src));exit;
+//
+//        if ( ! file_exists($src) AND $default)
+//        {
+//            $src = URL::site(self::$directory).'/'.self::$default_filename;
+//        }
+
+        return '<a href="'.$href.'"><img src="'.$src.'" alt=""></a>';
     }
 
     public static function upload($id)

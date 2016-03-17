@@ -68,7 +68,7 @@ class Controller_Articles extends Controller_Content {
                     'user_id'    => $this->user->id,
                     'article_id' => $this->article_id,
                 ))
-                ->save();
+                ->create();
         }
 
         $this->redirect(URL::get_default_url('articles', '', $this->article_id));

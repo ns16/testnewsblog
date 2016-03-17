@@ -9,7 +9,7 @@ class Model_Article extends ORM {
     // одной статье
     // Избранная статья может принадлежать многим пользователям, а пользователь
     // может иметь много избранных статей
-    // Нужно использовать find_all()
+    // Для получения пользователей нужно использовать find_all()
     protected $_has_many = array(
         'comments' => array(
             'model' => 'Article_Comment',

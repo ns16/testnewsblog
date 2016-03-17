@@ -64,7 +64,7 @@ class Controller_Comments extends Controller {
                 ->create();
 
             // Redirect to page of personal data
-            $this->redirect(URL::get_user_default_url('articles', '', $article_id));
+            $this->redirect(URL::get_default_url('articles', '', $article_id));
         }
 
         // Transfer article id into view

@@ -21,11 +21,11 @@ Route::set('user_default', 'user(/<controller>(/<action>(/<id>)))')
 Route::set('articles', 'articles(/<id>)')
 	->defaults(array(
 		'controller' => 'articles',
-		'action'     => 'index',
+		'action'     => 'view',
 	));
 
 Route::set('default', '(<controller>(/<action>(/<id>)))')
 	->defaults(array(
 		'controller' => 'articles',
-		'action'     => 'index',
+		'action'     => 'view',
 	));

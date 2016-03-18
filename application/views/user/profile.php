@@ -75,7 +75,7 @@
                         </div>
                         <div class="comment-article">
                             <span>К статье: </span>
-                            <a href="<?= URL::get_default_url('articles', 'index', $comment->article->id); ?>"><?= $comment->article->title; ?></a>
+                            <a href="<?= URL::get_default_url('articles', '', $comment->article->id); ?>"><?= $comment->article->title; ?></a>
                         </div>
                     </div>
                 </div>
@@ -96,8 +96,8 @@
                             <?= $article->title; ?>
                         </div>
                         <div class="article-caption-buttons">
-                            <a href="<?= URL::get_default_url('articles', 'index', $article->id); ?>" class="btn btn-default">Подробнее</a>
-                            <a href="<?= URL::get_default_url('articles', 'index', $article->id); ?>" class="btn btn-default">Удалить</a>
+                            <a href="<?= URL::get_default_url('articles', '', $article->id); ?>" class="btn btn-default">Подробнее</a>
+                            <a href="<?= URL::get_default_url('articles', '', $article->id); ?>" class="btn btn-default">Удалить</a>
                         </div>
                     </div>
                 </div>

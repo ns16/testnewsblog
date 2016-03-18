@@ -55,7 +55,7 @@
             <p class="container-account-prompt col-md-12 text-muted">Ваше виртуальное лицо или картинка. Максимальные размеры <em>1080х1920</em> и объем <em>5120</em> Кб. По умолчанию отображается аватар, полученный при авторизации из соцсети. Минимальные размеры <em>500х500</em>.</p>
         </div>
 
-        <div id="container-account-buttons"  class="form-group">
+        <div id="container-account-buttons" class="form-group">
             <a href="<?= URL::get_user_default_url('profile', 'index', $user_id); ?>" class="btn btn-default">Отменить</a>
             <input class="btn btn-default" type="submit" value="Сохранить" name="">
         </div>

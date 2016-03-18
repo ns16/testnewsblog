@@ -51,8 +51,8 @@
             </div>
         </div>
 
-        <div id="container-social-buttons"  class="form-group">
-            <a href="<?= URL::site('user/profile/index/'.$user_id); ?>" class="btn btn-default">Отменить</a>
+        <div id="container-social-buttons" class="form-group">
+            <a href="<?= URL::get_user_default_url('profile', 'index', $user_id); ?>" class="btn btn-default">Отменить</a>
             <input class="btn btn-default" type="submit" value="Сохранить" name="">
         </div>
     </form>

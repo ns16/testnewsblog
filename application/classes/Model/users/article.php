@@ -2,6 +2,6 @@
 
 class Model_Users_Article extends ORM {
 
-    protected $_table_name = 'users_articles';
+    protected $_table_name  = 'users_articles';
 
 }

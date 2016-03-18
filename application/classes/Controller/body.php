@@ -20,12 +20,12 @@ class Controller_Body extends Controller_Template {
 
         $this->body = View::factory('body');
 
-        $links = array(
+        $styles = array(
             'media/css/style.css',
         );
 
         $this->template->title = 'Главная страница';
-        $this->template->links = $links;
+        $this->template->styles = $styles;
         $this->template->body = $this->body;
     }
 

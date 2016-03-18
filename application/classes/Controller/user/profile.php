@@ -8,13 +8,13 @@ class Controller_User_Profile extends Controller_User_Base {
 
         parent::before();
 
-        $links = array(
+        $styles = array(
             'media/css/style.css',
             'media/css/profile.css',
         );
 
         $this->template->title = 'Мой профиль';
-        $this->template->links = $links;
+        $this->template->styles = $styles;
     }
 
     public function action_index()

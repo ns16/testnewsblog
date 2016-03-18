@@ -75,13 +75,13 @@ class Controller_Auth extends Controller_Body {
             'username' => $username,
         ));
 
-        $links = array(
+        $styles = array(
             'media/css/style.css',
             'media/css/login.css',
         );
 
         $this->template->title = 'Вход';
-        $this->template->links = $links;
+        $this->template->styles = $styles;
         $this->body->container = $view;
     }
 

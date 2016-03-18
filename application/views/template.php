@@ -10,8 +10,8 @@
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 
-    <? foreach($links as $link): ?>
-        <?= HTML::style($link); ?>
+    <? foreach ($styles as $style): ?>
+        <?= HTML::style($style); ?>
     <? endforeach; ?>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->

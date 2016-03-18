@@ -111,13 +111,13 @@ class Controller_User extends Controller_Body {
             'email'    => $email,
         ));
 
-        $links = array(
+        $styles = array(
             'media/css/style.css',
             'media/css/login.css',
         );
 
         $this->template->title = 'Регистрация';
-        $this->template->links = $links;
+        $this->template->styles = $styles;
         $this->body->container = $view;
     }
 

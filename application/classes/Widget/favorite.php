@@ -3,7 +3,7 @@
 class Widget_Favorite extends Widget {
 
     /**
-     * @var  Model_Article|NULL  current article
+     * @var  Model_Article|NULL  model of current article
      */
     protected $article = NULL;
 

@@ -16,13 +16,13 @@ class Controller_User_Settings extends Controller_User_Base {
         $this->container = View::factory('user/settings')
             ->set('user_id', $this->user_id);
 
-        $links = array(
+        $styles = array(
             'media/css/style.css',
             'media/css/settings.css',
         );
 
         $this->template->title = 'Мои настройки';
-        $this->template->links = $links;
+        $this->template->styles = $styles;
         $this->body->container = $this->container;
     }
 

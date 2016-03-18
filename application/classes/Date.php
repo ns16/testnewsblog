@@ -8,8 +8,34 @@ class Date extends Kohana_Date {
      * @param   string  $date  date string
      * @return  mixed
      */
-    public static function russian_months($date)
+//    public static function russian_months($date)
+//    {
+//        $eng_months = Date::months(Date::MONTHS_LONG);
+//
+//        $rus_months = array(
+//            1 => 'января',
+//            2 => 'февраля',
+//            3 => 'марта',
+//            4 => 'апреля',
+//            5 => 'мая',
+//            6 => 'июня',
+//            7 => 'июля',
+//            8 => 'августа',
+//            9 => 'сентября',
+//            10 => 'октября',
+//            11 => 'ноября',
+//            12 => 'декабря',
+//        );
+//
+//        $date = str_replace($eng_months, $rus_months, $date);
+//
+//        return $date;
+//    }
+
+    public static function rus_date_format($date)
     {
+        $str_date = strftime('%H:%M, %d %B %Y', strtotime($date));
+
         $eng_months = Date::months(Date::MONTHS_LONG);
 
         $rus_months = array(
@@ -27,13 +53,13 @@ class Date extends Kohana_Date {
             12 => 'декабря',
         );
 
-        $date = str_replace($eng_months, $rus_months, $date);
+        $str_date = str_replace($eng_months, $rus_months, $str_date);
 
-        return $date;
+        return $str_date;
     }
 
     /**
-     * It returns an array of Russian names of the months.
+     * Return an array of the Russian names of the months.
      *
      * @return  array
      */

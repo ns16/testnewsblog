@@ -2,6 +2,20 @@
 
 class Controller_Articles extends Controller_Content {
 
+    public $article_id;
+
+    public function before()
+    {
+        parent::before();
+
+        $styles = array(
+            'media/css/style.css',
+            'media/css/article.css',
+        );
+
+        $this->template->styles = $styles;
+    }
+
     public function action_view()
     {
         $view = View::factory('articles/view');

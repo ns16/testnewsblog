@@ -1,0 +1,45 @@
+#article-title {
+    overflow: hidden;
+}
+#article-title > h3 {
+    float: left;
+    width: 95%;
+}
+#article-title > span {
+    float: left;
+    width: 5%;
+    margin: 16px 0 8px;
+    text-align: right;
+}
+#article-date {
+    margin: 10px 0;
+}
+#comments > h4 {
+    margin-top: 25px;
+}
+.comment {
+    background-color: silver;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+.comment-votes {
+    height: 35px;
+    text-align: right;
+}
+.comment-votes-count {
+    margin-right: 10px;
+    font-weight: bold;
+}
+#comments-form {
+    margin: 25px 0 10px;
+}
+#comments-form-main {
+    overflow: hidden;
+}
+#comments-form-main > input {
+    float: right;
+    margin-top: 10px;
+}
+#comments-form-prompt {
+    text-align: center;
+}

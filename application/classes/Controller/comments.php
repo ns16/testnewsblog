@@ -2,7 +2,7 @@
 
 class Controller_Comments extends Controller {
 
-    public function action_index()
+    /*public function action_index()
     {
         $view = View::factory('comments/index');
 
@@ -24,11 +24,11 @@ class Controller_Comments extends Controller {
         $view->set('comments', $comments);
 
         $this->response->body($view);
-    }
+    }*/
 
     public function action_form()
     {
-        $view = View::factory('comments/form');
+//        $view = View::factory('comments/form');
 
         // Get id of article
         $article_id = $this->request->param('id');
@@ -61,16 +61,16 @@ class Controller_Comments extends Controller {
                     'user_id'    => $user->id,
                     'content'    => $post['comment'],
                 ))
-                ->create();
+                ->save();
 
             // Redirect to page of personal data
             $this->redirect(URL::get_default_url('articles', '', $article_id));
         }
 
         // Transfer article id into view
-        $view->set('article_id', $article_id);
+//        $view->set('article_id', $article_id);
 
-        $this->response->body($view);
+//        $this->response->body($view);
     }
 
 } // End Comments

@@ -3,7 +3,7 @@
 class Widget_Favorite extends Widget {
 
     /**
-     * @var  Model_Article|NULL  model of current article
+     * @var  Model_Article|NULL  current article
      */
     protected $article = NULL;
 
@@ -22,7 +22,7 @@ class Widget_Favorite extends Widget {
         // Set variable of view
         $view->set(array(
             'article_id'      => $this->article->id,
-            'current_user_id' => $this->user ? $this->user->id : NULL,
+            'current_user_id' => isset($this->user) ? $this->user->id : NULL,
             'user_ids'        => $user_ids,
         ));
 

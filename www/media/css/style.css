@@ -32,8 +32,8 @@ textarea {
 }
 #header-dropdown {
     position: absolute;
-    top: 18px;
-    right: 10px;
+    top: 16px;
+    right: 15px;
 }
 #header-dropdown-user {
     margin-right: 10px;
@@ -61,38 +61,6 @@ textarea {
     padding: 0 15px 0;
     margin-left: 350px;
     overflow: hidden;
-}
-#content-article-favorite {
-    float: right;
-}
-#content-comments > h4 {
-    margin-top: 25px;
-}
-#content-comments > div {
-    background-color: silver;
-    padding: 5px;
-    margin-bottom: 10px;
-}
-.comment-votes {
-    height: 35px;
-    text-align: right;
-}
-.comment-votes-count {
-    margin-right: 10px;
-    font-weight: bold;
-}
-#content-form {
-    margin: 25px 0 10px;
-}
-#content-form-main {
-    overflow: hidden;
-}
-#content-form-main > input {
-    float: right;
-    margin-top: 10px;
-}
-#content-form-prompt {
-    text-align: center;
 }
 #footer {
     width: 1170px;

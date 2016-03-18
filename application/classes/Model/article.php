@@ -17,7 +17,7 @@ class Model_Article extends ORM {
         ),
         'users' => array(
             'model' => 'User',
-            'through' => 'users_articles',
+            'through' => 'user_articles',
         ),
     );
 }

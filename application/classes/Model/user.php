@@ -57,7 +57,7 @@ class Model_User extends Model_Auth_User {
     protected $_has_many = array(
         'articles' => array(
             'model' => 'Article',
-            'through' => 'users_articles',
+            'through' => 'user_articles',
         ),
         'comments' => array(
             'model' => 'Article_Comment',

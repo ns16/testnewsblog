@@ -19,14 +19,18 @@ class Controller_Votes extends Controller {
     {
         // Get id of current user
         $current_user = Auth::instance()->get_user();
-        $current_user_id = $current_user ? $current_user->id : NULL;
+        $current_user_id = isset($current_user) ? $current_user->id : NULL;
 
         // Get id of article
         $article_id = $this->request->query('article_id');
 
         if ( ! $current_user_id)
         {
-            $this->redirect('articles/'.$article_id);
+            $this->redirect(URL::get_default_url(
+                'articles',
+                '',
+                $article_id
+            ));
         }
 
         // Get id of comment

@@ -29,11 +29,21 @@ class Controller_Favorites extends Controller
      */
     protected function toggle()
     {
+        // Get id of current user
+        $user = Auth::instance()->get_user();
+        $this->user_id = isset($user) ? $user->id : NULL;
+
         // Get id of article
         $this->article_id = $this->request->param('id');
 
-        // Get id of user
-        $this->user_id = Auth::instance()->get_user()->id;
+        if ( ! $this->user_id)
+        {
+            $this->redirect(URL::get_default_url(
+                'articles',
+                '',
+                $this->article_id
+            ));
+        }
 
         // Get model of link of user and article with given ids
         $model = ORM::factory('User_Article')

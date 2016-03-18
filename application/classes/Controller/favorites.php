@@ -5,9 +5,14 @@ class Controller_Favorites extends Controller
     protected $user_id    = NULL;
     protected $article_id = NULL;
 
+    /**
+     * Данный экшен после добавления статьи в избранное или удаления ее из
+     * избранного перенаправляет пользователя на страницу просмотра статьи с данным
+     * идентификатором
+     */
     public function action_index()
     {
-        $this->action();
+        $this->toggle();
 
         $this->redirect(URL::get_default_url(
             'articles',
@@ -16,7 +21,13 @@ class Controller_Favorites extends Controller
         ));
     }
 
-    protected function action()
+    /**
+     * Данный метод добавляет статью в избранное, если она еще не добавлена, и
+     * удаляет ее из избранного, если она уже добавлена
+     *
+     * @throws Kohana_Exception
+     */
+    protected function toggle()
     {
         // Get id of article
         $this->article_id = $this->request->param('id');

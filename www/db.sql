@@ -47,9 +47,9 @@ CREATE TABLE IF NOT EXISTS `article_comments` (
   KEY `FK_articles` (`article_id`),
   CONSTRAINT `FK_articles` FOREIGN KEY (`article_id`) REFERENCES `articles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_users` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COMMENT='Таблица комментариев к статьям';
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COMMENT='Таблица комментариев к статьям';
 
--- Дамп данных таблицы kohana-test.article_comments: ~13 rows (приблизительно)
+-- Дамп данных таблицы kohana-test.article_comments: ~15 rows (приблизительно)
 /*!40000 ALTER TABLE `article_comments` DISABLE KEYS */;
 INSERT INTO `article_comments` (`id`, `article_id`, `user_id`, `content`, `date`) VALUES
 	(1, 1, 1, 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo, nam, quos eius illum sequi temporibus.', '2016-02-23 18:03:45'),
@@ -64,7 +64,9 @@ INSERT INTO `article_comments` (`id`, `article_id`, `user_id`, `content`, `date`
 	(12, 2, 2, 'image(array $file, $max_width = NULL, $max_height = NULL, $exact = FALSE) – проверяет, является ли загруженный файл изображением и, при необходимости, имеет ли правильный размер.', '2016-03-09 14:42:57'),
 	(13, 5, 2, 'jkdjkasdhkjsahdkjsahdj', '2016-03-17 12:21:46'),
 	(14, 5, 2, 'jkdjkasdhkjsahdkjsahdj', '2016-03-17 12:22:16'),
-	(15, 3, 2, 'kajdkjsakjdhjskadhjk', '2016-03-17 12:23:04');
+	(15, 3, 2, 'kajdkjsakjdhjskadhjk', '2016-03-17 12:23:04'),
+	(16, 5, 1, 'aksbdkjabdjkabskjdbsjakdbkajsbdk skabd sdkhsa saldnsa lsndasd asjdsad jsadfdgsa alsdlas asldhid alsdhiasd asldjidsa aasankdslakd aldn', '2016-03-18 14:07:18'),
+	(17, 3, 1, 'sdkdk sgdkj skfdkjb ksjbdk hakdskj bjkdfbk jsdbf jkdsbf kjbskdf bkdjsbfj kbdskjfb sdjkfbj ksbkjfd bjfkbs dkjfbj ksdbfksd bkfbsk dbfjk sdbkfbd ksbfkdsb fkjbdkfbs kjfbsk jfbkjsbf kjsbdjf kbdsk jfbdsk jfsdkfb', '2016-03-18 16:07:14');
 /*!40000 ALTER TABLE `article_comments` ENABLE KEYS */;
 
 
@@ -80,9 +82,9 @@ CREATE TABLE IF NOT EXISTS `article_comment_votes` (
   KEY `user_id` (`user_id`),
   CONSTRAINT `FK_article_comment_votes_article_comments` FOREIGN KEY (`comment_id`) REFERENCES `article_comments` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_article_comment_votes_users` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8 COMMENT='Таблица голосов к комментариям к статьям';
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8 COMMENT='Таблица голосов к комментариям к статьям';
 
--- Дамп данных таблицы kohana-test.article_comment_votes: ~18 rows (приблизительно)
+-- Дамп данных таблицы kohana-test.article_comment_votes: ~22 rows (приблизительно)
 /*!40000 ALTER TABLE `article_comment_votes` DISABLE KEYS */;
 INSERT INTO `article_comment_votes` (`id`, `comment_id`, `user_id`, `value`) VALUES
 	(3, 7, 2, 1),
@@ -102,7 +104,11 @@ INSERT INTO `article_comment_votes` (`id`, `comment_id`, `user_id`, `value`) VAL
 	(20, 10, 8, 1),
 	(21, 3, 8, -1),
 	(22, 5, 8, 1),
-	(23, 11, 8, 1);
+	(23, 11, 8, 1),
+	(24, 13, 1, 1),
+	(25, 14, 1, -1),
+	(26, 12, 1, 1),
+	(27, 15, 1, -1);
 /*!40000 ALTER TABLE `article_comment_votes` ENABLE KEYS */;
 
 
@@ -162,7 +168,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Дамп данных таблицы kohana-test.users: ~7 rows (приблизительно)
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` (`id`, `email`, `username`, `password`, `logins`, `last_login`) VALUES
-	(1, 'dd@rambler.ru', 'Doomdragon', 'ced9203d6ff5b0bb79a7e7a8afeb6ad1b5c831741e6ef9043d2305fd6364f037', 72, 1458193043),
+	(1, 'dd@rambler.ru', 'Doomdragon', 'ced9203d6ff5b0bb79a7e7a8afeb6ad1b5c831741e6ef9043d2305fd6364f037', 77, 1458317729),
 	(2, 'zull@gmail.com', 'Zull', 'd2cd672a1ec65d3b36e3a0e8a55cec3fa6190e90b8d22702319653b19e67a327', 27, 1458195678),
 	(3, 'moogumi@yandex.ru', 'Moogumi', '6659243fe3a5249a0c03005953babb613a128c5fabb07fa76d2641880cf5c22a', 13, 1458032904),
 	(4, 'coirin@mail.ru', 'Coirin', 'f6ffc762e08a81e8f522f3493fee7b07eb67b9514aed56e85efcb612a64190f6', 11, 1458038575),
@@ -172,32 +178,33 @@ INSERT INTO `users` (`id`, `email`, `username`, `password`, `logins`, `last_logi
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
 
--- Дамп структуры для таблица kohana-test.users_articles
-CREATE TABLE IF NOT EXISTS `users_articles` (
+-- Дамп структуры для таблица kohana-test.user_articles
+CREATE TABLE IF NOT EXISTS `user_articles` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(10) unsigned NOT NULL COMMENT 'Идентификатор пользователя',
   `article_id` int(10) unsigned NOT NULL COMMENT 'Идентификатор статьи',
-  PRIMARY KEY (`user_id`,`article_id`),
+  PRIMARY KEY (`id`),
+  KEY `FK_users_articles_users` (`user_id`),
   KEY `FK_users_articles_articles` (`article_id`),
-  CONSTRAINT `FK_users_articles_users` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_users_articles_articles` FOREIGN KEY (`article_id`) REFERENCES `articles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Таблица для связи пользователей и избранных статей';
+  CONSTRAINT `FK_users_articles_articles` FOREIGN KEY (`article_id`) REFERENCES `articles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_users_articles_users` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COMMENT='Таблица для связи пользователей и избранных статей';
 
--- Дамп данных таблицы kohana-test.users_articles: ~11 rows (приблизительно)
-/*!40000 ALTER TABLE `users_articles` DISABLE KEYS */;
-INSERT INTO `users_articles` (`user_id`, `article_id`) VALUES
-	(1, 1),
-	(2, 1),
-	(5, 1),
-	(1, 2),
-	(2, 2),
-	(4, 2),
-	(1, 3),
-	(3, 3),
-	(1, 4),
-	(1, 5),
-	(2, 5),
-	(3, 5);
-/*!40000 ALTER TABLE `users_articles` ENABLE KEYS */;
+-- Дамп данных таблицы kohana-test.user_articles: ~11 rows (приблизительно)
+/*!40000 ALTER TABLE `user_articles` DISABLE KEYS */;
+INSERT INTO `user_articles` (`id`, `user_id`, `article_id`) VALUES
+	(3, 1, 3),
+	(6, 3, 3),
+	(7, 3, 5),
+	(8, 4, 2),
+	(9, 5, 1),
+	(10, 2, 2),
+	(12, 2, 1),
+	(13, 2, 4),
+	(15, 1, 2),
+	(16, 1, 5),
+	(17, 1, 4);
+/*!40000 ALTER TABLE `user_articles` ENABLE KEYS */;
 
 
 -- Дамп структуры для таблица kohana-test.user_personal

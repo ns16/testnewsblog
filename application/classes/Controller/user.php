@@ -47,11 +47,7 @@ class Controller_User extends Controller_Body {
                 ->rule('username', 'max_length', array(':value', 32))
                 ->rule('email', 'email')
                 ->rule('email', 'max_length', array(':value', 254))
-                ->rule('password', 'matches', array(
-                    ':validation',
-                    ':field',
-                    'password_confirm'
-                ))
+                ->rule('password', 'matches', array(':validation', ':field', 'password_confirm'))
                 ->rule('password', 'min_length', array(':value', 3))
                 ->rule('password', 'max_length', array(':value', 64))
                 ->rule('captcha', 'captcha');
@@ -94,13 +90,15 @@ class Controller_User extends Controller_Body {
                 }
                 catch (ORM_Validation_Exception $e)
                 {
-                    // Get messages about errors
+                    // If the user entered the wrong username or password, then
+                    // set message error
                     $errors = $e->errors($e->alias());
                 }
             }
             else
             {
-                // Get messages about errors
+                // If the user entered invalid data, then get messages about
+                // errors
                 $errors = $validation->errors('validation');
             }
         }

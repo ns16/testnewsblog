@@ -65,7 +65,8 @@ class Controller_Auth extends Controller_Body {
             }
             else
             {
-                // If the user entered invalid data, get messages about errors
+                // If the user entered invalid data, then get messages about
+                // errors
                 $errors = $validation->errors('validation');
             }
         }

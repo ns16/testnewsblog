@@ -3,7 +3,7 @@
 class Controller_Body extends Controller_Template {
 
     /**
-     * @var  Model_User|NULL  user model
+     * @var  Model_User|NULL  model user
      */
     protected $user = NULL;
 

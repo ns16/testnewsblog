@@ -36,6 +36,7 @@ class Controller_Favorites extends Controller
         // Get id of article
         $this->article_id = $this->request->param('id');
 
+        // If user isn't logged, then reload page
         if ( ! $this->user_id)
         {
             $this->redirect(URL::get_default_url(

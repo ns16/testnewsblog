@@ -58,13 +58,14 @@ class Controller_Auth extends Controller_Body {
                 }
                 else
                 {
-                    // Set message error
-                    $message = 'Ошибка входа!';
+                    // If the user entered the wrong username or password, then
+                    // set message error
+                    $message = 'Неверное имя пользователя или пароль!';
                 }
             }
             else
             {
-                // Get messages about errors
+                // If the user entered invalid data, get messages about errors
                 $errors = $validation->errors('validation');
             }
         }
@@ -87,7 +88,7 @@ class Controller_Auth extends Controller_Body {
 
     public function action_logout()
     {
-        // Check that user is not logged
+        // Check that user isn't logged
         if ( ! $this->user)
         {
             throw new HTTP_Exception_403;

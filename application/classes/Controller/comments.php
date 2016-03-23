@@ -29,7 +29,7 @@ class Controller_Comments extends Controller {
             }
 
             // Add comment into table
-            $comment = ORM::factory('article_comment')
+            ORM::factory('article_comment')
                 ->values(array(
                     'article_id' => $article_id,
                     'user_id'    => $user->id,
@@ -38,8 +38,30 @@ class Controller_Comments extends Controller {
                 ->save();
 
             // Redirect to page of personal data
-            $this->redirect(URL::get_default_url('articles', '', $article_id));
+            $this->redirect(URL::get_default_url(
+                'articles',
+                '',
+                $article_id
+            ));
         }
+    }
+
+    public function action_delete()
+    {
+        // Get id of comment
+        $comment_id = $this->request->query('comment_id');
+        // Get id of user
+        $user_id = $this->request->query('user_id');
+
+        // Delete comment from table
+        ORM::factory('article_comment', $comment_id)->delete();
+
+        // Redirect to page of personal data
+        $this->redirect(URL::get_user_default_url(
+            'profile',
+            'index',
+            $user_id
+        ));
     }
 
 } // End Comments

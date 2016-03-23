@@ -5,6 +5,10 @@
     margin-bottom: 25px;
     overflow: hidden;
 }
+.block > h4 {
+    padding: 10px 0;
+    margin: 0;
+}
 
 #information {
     margin-bottom: 45px;
@@ -91,6 +95,7 @@
 }
 
 #comments {
+    overflow: visible;
     text-align: justify;
     text-justify: newspaper;
     font-size: 0;
@@ -101,11 +106,31 @@
     width: 100%;
 }
 .comment {
+    position: relative;
     display: inline-block;
     width: 560px;
+    margin-bottom: 20px;
     text-align: left;
     vertical-align: top;
     font-size: 14px;
+}
+.comment > .thumbnail {
+    margin-bottom: 0;
+}
+.comment-remove {
+    position: absolute;
+    right: -11px;
+    top: -11px;
+    display: none;
+    width: 22px;
+    height: 22px;
+    border: 3px solid #337ab7;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 16px;
+}
+.comment:hover > .comment-remove {
+    display: block;
 }
 .comment-info {
     overflow: hidden;

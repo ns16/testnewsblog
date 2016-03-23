@@ -78,6 +78,13 @@
                             <a href="<?= URL::get_default_url('articles', '', $comment->article->id); ?>"><?= $comment->article->title; ?></a>
                         </div>
                     </div>
+                    <a class="comment-remove" href="<?= URL::get_default_url('comments', 'delete').URL::query(
+                        array(
+                            'comment_id' => $comment->id,
+                            'user_id'    => $user_id,
+                        )); ?>">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </a>
                 </div>
             <? endforeach; ?>
         <? else: ?>

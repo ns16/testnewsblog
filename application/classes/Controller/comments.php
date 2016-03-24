@@ -14,7 +14,7 @@ class Controller_Comments extends Controller {
         }
 
         // Check that HTTP method is POST
-        if (HTTP_Request::POST == $this->request->method())
+        if (Request::POST == $this->request->method())
         {
             // Get values from POST array
             $post = $this->request->post();
@@ -37,7 +37,7 @@ class Controller_Comments extends Controller {
                 ))
                 ->save();
 
-            // Redirect to page of personal data
+            // Redirect to page of view article with given id
             $this->redirect(URL::get_default_url(
                 'articles',
                 '',

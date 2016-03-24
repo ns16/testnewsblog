@@ -2,7 +2,7 @@
 
 class Controller_Articles extends Controller_Content {
 
-    public $article_id;
+    public $article_id = NULL;
 
     public function before()
     {

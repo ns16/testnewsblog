@@ -23,7 +23,7 @@ return array(
 	'ip'            => 'Поле :field должно быть IP адресом',
 	'is_date'       => 'Вы не ввели год, месяц или день',
 	'matches'       => 'Поле :field должно быть таким же как поле :param3',
-	'min_length'    => 'Поле :field должно содержаь не меньше :param2 символов',
+	'min_length'    => 'Поле :field должно содержать не меньше :param2 символов',
 	'max_length'    => 'Поле :field не должно превышать :param2 символов',
 	'not_empty'     => 'Поле :field не должно быть пустым',
 	'numeric'       => ':field must be numeric',

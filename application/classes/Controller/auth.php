@@ -21,7 +21,7 @@ class Controller_Auth extends Controller_Body {
         $username = Arr::get($post, 'username');
 
         // Check that HTTP method is POST
-        if (HTTP_Request::POST == $this->request->method())
+        if (Request::POST == $this->request->method())
         {
             // Create object of Validation class
             $validation = Validation::factory($post);

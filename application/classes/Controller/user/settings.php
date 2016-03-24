@@ -28,7 +28,7 @@ class Controller_User_Settings extends Controller_User_Base {
 
     public function action_personal()
     {
-        $post = NULL;
+        $post   = NULL;
         $errors = array();
 
         $view = View::factory('user/settings/personal');
@@ -43,7 +43,7 @@ class Controller_User_Settings extends Controller_User_Base {
         }
 
         // Check that HTTP method is POST
-        if (HTTP_Request::POST == $this->request->method())
+        if (Request::POST == $this->request->method())
         {
             // Get values from POST array
             $post = $this->request->post();
@@ -126,7 +126,7 @@ class Controller_User_Settings extends Controller_User_Base {
 
     public function action_account()
     {
-        $post = NULL;
+        $post   = NULL;
         $errors = array();
 
         $view = View::factory('user/settings/account');
@@ -141,7 +141,7 @@ class Controller_User_Settings extends Controller_User_Base {
         }
 
         // Check that HTTP method is POST
-        if (HTTP_Request::POST == $this->request->method())
+        if (Request::POST == $this->request->method())
         {
             $result = Files::upload($this->user_id);
 
@@ -165,11 +165,7 @@ class Controller_User_Settings extends Controller_User_Base {
                 ->rule('email', 'not_empty')
                 ->rule('email', 'email')
                 ->rule('email', 'max_length', array(':value', 254))
-                ->rule('password', 'matches', array(
-                    ':validation',
-                    ':field',
-                    'password_confirm',
-                ))
+                ->rule('password', 'matches', array(':validation', ':field', 'password_confirm'))
                 ->rule('password', 'min_length', array(':value', 3))
                 ->rule('password', 'max_length', array(':value', 64));
 
@@ -213,10 +209,9 @@ class Controller_User_Settings extends Controller_User_Base {
             {
                 // Get messages about errors
                 $errors = $validation->errors('validation');
+                // Merge arrays of errors
+                $errors = Arr::merge($errors, $result['errors']);
             }
-
-            // Merge arrays of errors
-            $errors = Arr::merge($errors, $result['errors']);
         }
 
         $settings = $model->as_array();
@@ -254,7 +249,7 @@ class Controller_User_Settings extends Controller_User_Base {
         }
 
         // Check that HTTP method is POST
-        if (HTTP_Request::POST == $this->request->method())
+        if (Request::POST == $this->request->method())
         {
             // Get values from POST array
             $post = $this->request->post();

@@ -54,6 +54,7 @@ class Controller_Votes extends Controller {
             ));
         }
 
+        // Set values for fields
         ORM::factory('article_comment_vote')
             ->values(array(
                 'user_id'    => $this->current_user_id,
@@ -62,6 +63,7 @@ class Controller_Votes extends Controller {
             ))
             ->save();
 
+        // Redirect to page of view article with given id
         $this->redirect(URL::get_default_url(
             'articles',
             '',
@@ -69,6 +71,12 @@ class Controller_Votes extends Controller {
         ));
     }
 
+    /**
+     * Данный метод возвращает TRUE, если нужно запретить текущему пользователю
+     * голосовать за данный комментарий, иначе возвращает FALSE
+     *
+     * @return bool
+     */
     protected function ban_vote()
     {
         return $this->is_author_comment() OR $this->already_voted();

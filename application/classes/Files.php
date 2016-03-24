@@ -66,11 +66,16 @@ class Files  {
                 $directory = Files::get_directory();
 
                 // Set full path to new file or FALSE
-                $result['check'] = Upload::save($validation['image'], $filename, $directory);
+                $result['check'] = Upload::save(
+                    $validation['image'],
+                    $filename,
+                    $directory
+                );
             }
             else
             {
-                // Get messages about errors
+                // If the user downloads invalid image, then get messages about
+                // errors
                 $result['errors'] = $validation->errors('validation');
             }
         }

@@ -28,12 +28,12 @@ class Controller_User extends Controller_Body {
         $email = Arr::get($post, 'email');
 
         // Check that HTTP method is POST
-        if (HTTP_Request::POST == $this->request->method())
+        if (Request::POST == $this->request->method())
         {
             // Create object of Validation class
             $validation = Validation::factory($post);
 
-            // Set labels for fields, otherwise error will be get
+            // Set labels for fields
             $validation
                 ->label('username', 'Имя пользователя')
                 ->label('email', 'E-mail')
@@ -64,19 +64,18 @@ class Controller_User extends Controller_Body {
                         'password',
                     );
 
-                    // Check that model is loaded
-                    if ($model->loaded())
-                    {
-                        // Update data of user
-                        $model->update_user($post, $expected);
-                    }
-                    else
+                    // Check that model isn't loaded
+                    if ( ! $model->loaded())
                     {
                         // Create new user and set login role
                         $model->create_user($post, $expected);
                         $model->add('roles', ORM::factory('role', array(
                             'name' => 'login',
                         )));
+                    }
+                    else
+                    {
+                        throw new HTTP_Exception_404;
                     }
 
                     // Login new user

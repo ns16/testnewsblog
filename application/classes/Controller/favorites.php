@@ -23,22 +23,16 @@ class Controller_Favorites extends Controller
 
             $this->toggle();
 
-
-
             $json = array(
                 'message' => $this->message,
                 'class'   => $this->class,
             );
+
             $jsonstring = json_encode($json);
             echo $jsonstring;
         }
 
-
-//        $this->redirect(URL::get_default_url(
-//            'articles',
-//            '',
-//            $this->article_id
-//        ));
+//        $this->redirect(URL::get_default_url('articles', '', $this->article_id));
     }
 
     /**

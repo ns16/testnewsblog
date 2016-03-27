@@ -1,9 +1,10 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
-class Controller_Favorites extends Controller
-{
-    protected $user_id    = NULL;
+class Controller_Favorites extends Controller {
+
     protected $article_id = NULL;
+    protected $user_id    = NULL;
+
     protected $message    = NULL;
     protected $class      = NULL;
 
@@ -14,25 +15,21 @@ class Controller_Favorites extends Controller
      */
     public function action_index()
     {
-        if ($this->is_ajax())
-        {
-            $post = $this->request->post();
+        $post = $this->request->post();
 
-            $this->user_id = Arr::get($post, 'user_id');
-            $this->article_id = Arr::get($post, 'article_id');
+        $this->article_id = Arr::get($post, 'article_id');
 
-            $this->toggle();
+        $user = Auth::instance()->get_user();
+        $this->user_id = isset($user) ? $user->id : NULL;
 
-            $json = array(
-                'message' => $this->message,
-                'class'   => $this->class,
-            );
+        $this->toggle();
 
-            $jsonstring = json_encode($json);
-            echo $jsonstring;
-        }
+        $answer = array(
+            'message' => $this->message,
+            'class'   => $this->class,
+        );
 
-//        $this->redirect(URL::get_default_url('articles', '', $this->article_id));
+        echo json_encode($answer);
     }
 
     /**
@@ -43,21 +40,9 @@ class Controller_Favorites extends Controller
      */
     protected function toggle()
     {
-        // Get id of current user
-//        $user = Auth::instance()->get_user();
-//        $this->user_id = isset($user) ? $user->id : NULL;
-
-        // Get id of article
-//        $this->article_id = $this->request->param('id');
-
         // If user isn't logged, then reload page
         if ( ! $this->user_id)
         {
-//            $this->redirect(URL::get_default_url(
-//                'articles',
-//                '',
-//                $this->article_id
-//            ));
             $this->message = 'Авторизуйтесь или зарегистрируйтесь, чтобы добавить статью в избранное!';
             $this->class   = '';
 
@@ -91,13 +76,6 @@ class Controller_Favorites extends Controller
             $this->message = 'Статья добавлена в избранное';
             $this->class   = 'glyphicon-star glyphicon-star-empty';
         }
-    }
-
-    protected function is_ajax()
-    {
-        return isset($_SERVER['HTTP_X_REQUESTED_WITH'])
-            AND ! empty($_SERVER['HTTP_X_REQUESTED_WITH'])
-            AND strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
     }
 
 } // End Favorites

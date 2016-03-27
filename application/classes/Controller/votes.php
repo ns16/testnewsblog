@@ -2,73 +2,65 @@
 
 class Controller_Votes extends Controller {
 
-    const VOTE_UP   = 1;
-    const VOTE_DOWN = -1;
-
     protected $current_user_id = NULL;
     protected $comment_id      = NULL;
     protected $user_id         = NULL;
+    protected $vote            = NULL;
 
-    public function action_up()
-    {
-        $this->set_vote(self::VOTE_UP);
-    }
+    protected $message         = NULL;
+    protected $sum_votes       = NULL;
 
-    public function action_down()
+    public function action_index()
     {
-        $this->set_vote(self::VOTE_DOWN);
-    }
+        $post = $this->request->post();
 
-    protected function set_vote($value)
-    {
-        // Get id of current user
         $current_user = Auth::instance()->get_user();
         $this->current_user_id = isset($current_user) ? $current_user->id : NULL;
 
-        // Get id of article
-        $article_id = $this->request->query('article_id');
+        $this->comment_id = Arr::get($post, 'comment_id');
+        $this->user_id = Arr::get($post, 'user_id');
+        $this->vote = Arr::get($post, 'vote');
 
-        // If user isn't logged, then reload page
+        // If user isn't logged
         if ( ! $this->current_user_id)
         {
-            $this->redirect(URL::get_default_url(
-                'articles',
-                '',
-                $article_id
-            ));
+            $this->message = 'Авторизуйтесь или зарегистрируйтесь, чтобы проголосовать!';
+            $this->send_json();
+            return;
         }
-
-        // Get id of comment
-        $this->comment_id = $this->request->query('comment_id');
-        // Get id of user
-        $this->user_id = $this->request->query('user_id');
 
         // Check that current user already voted to this comment or he is author
         // of this comment
         if ($this->ban_vote())
         {
-            $this->redirect(URL::get_default_url(
-                'articles',
-                '',
-                $article_id
-            ));
+            $this->message = 'Вы уже голосовали за данный комментарий!';
+            $this->send_json();
+            return;
         }
 
         // Set values for fields
         ORM::factory('article_comment_vote')
             ->values(array(
-                'user_id'    => $this->current_user_id,
                 'comment_id' => $this->comment_id,
-                'value'      => $value,
+                'user_id'    => $this->current_user_id,
+                'value'      => $this->vote,
             ))
             ->save();
 
-        // Redirect to page of view article with given id
-        $this->redirect(URL::get_default_url(
-            'articles',
-            '',
-            $article_id
-        ));
+        $comment = ORM::factory('article_comment', $this->comment_id);
+        $this->sum_votes = $comment->votes->get_sum_votes_comment();
+
+        $this->send_json();
+    }
+
+    protected function send_json()
+    {
+        $answer = array(
+            'message'   => $this->message,
+            'sum_votes' => $this->sum_votes,
+        );
+
+        echo json_encode($answer);
     }
 
     /**

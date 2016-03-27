@@ -18,3 +18,66 @@
 
     <?= Widget::factory('comments_form', array('article' => $article)); ?>
 </div>
+<script>
+
+    var votes_buttons = document.getElementsByClassName("comment-votes-button");
+    var votes_count   = null;
+
+    for (var i = 0; i < votes_buttons.length; i++)
+    {
+        votes_buttons[i].onclick = function() {
+            votes_buttons_handler(this)
+        }
+    }
+
+    function votes_buttons_handler(elem)
+    {
+        votes_count    = elem.parentElement.firstElementChild;
+
+        var comment_id = elem.parentElement.dataset.comment_id;
+        var user_id    = elem.parentElement.dataset.user_id;
+        var vote       = elem.dataset.value;
+
+        $.ajax({
+            url: "/votes/index",
+            type: "post",
+            data: {
+                comment_id: comment_id,
+                user_id: user_id,
+                vote: vote
+            },
+            dataType: "json",
+            success: function(data) {
+
+                if (data.message)
+                {
+                    alert(data.message);
+                }
+
+                if (data.sum_votes)
+                {
+                    if (data.sum_votes > 0) {
+                        var sum_votes_class = "text-success";
+                    } else if (data.sum_votes < 0) {
+                        var sum_votes_class = "text-danger";
+                    } else {
+                        var sum_votes_class = "";
+                    }
+
+                    var sum_votes_html =
+                        "<span class='comment-votes-count " +
+                        sum_votes_class + "'>" + data.sum_votes + "</span>";
+
+                    votes_count.innerHTML = sum_votes_html;
+                }
+            },
+            error: function(jqXHR) {
+                console.log(
+                    'Error: ' + jqXHR.status +
+                    ', Message: ' + jqXHR.statusText
+                );
+            }
+        });
+    }
+
+</script>

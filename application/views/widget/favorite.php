@@ -1,6 +1,5 @@
 <div id="article-title-favorite">
-    <!--<a href="<?/*= URL::get_default_url('favorites', 'index', $article_id); */?>" class="btn btn-default">-->
-    <a id="article-title-favorite-button" class="btn btn-default">
+    <button id="article-title-favorite-button" class="btn btn-default">
         <span class="glyphicon
         <? if (in_array($current_user_id, $user_ids)): ?>
             glyphicon-star
@@ -8,39 +7,41 @@
             glyphicon-star-empty
         <? endif; ?>
         "></span>
-    </a>
+    </button>
 </div>
 <script>
 
-    var button = document.getElementById("article-title-favorite-button");
-    var span   = button.firstElementChild;
+    var favorite_button = document.getElementById("article-title-favorite-button");
+    var favorite_span   = favorite_button.firstElementChild;
 
     var article_id = <?= $article_id; ?>;
     var user_id    = <?= isset($current_user_id) ? $current_user_id : 'null'; ?>;
 
-    button.onclick = function()
+    favorite_button.onclick = function()
     {
-        toggle_favorite();
+        favorite_button_handler();
     }
 
-    function toggle_favorite()
+    function favorite_button_handler()
     {
         $.ajax({
-            url: "<?= URL::get_default_url('favorites', 'index'); ?>",
+            url: "/favorites/index",
             type: "POST",
             data: {
                 article_id: article_id,
                 user_id: user_id
             },
-            dataType: "json"
-        })
-        .done(function(json) {
-
-//            span.classList.toggle(json.class);
-
-            $(span).toggleClass(json.class);
-            alert(json.message);
-
+            dataType: "json",
+            success: function(data) {
+                $(favorite_span).toggleClass(data.class);
+                alert(data.message);
+            },
+            error: function(jqXHR) {
+                console.log(
+                    'Error: ' + jqXHR.status +
+                    ', Message: ' + jqXHR.statusText
+                );
+            }
         });
     }
 

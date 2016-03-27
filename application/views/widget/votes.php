@@ -1,4 +1,7 @@
-<div class="comment-votes">
+<div class="comment-votes"
+    data-comment_id="<?= $comment->id; ?>"
+    data-user_id="<?= $comment->user_id; ?>"
+>
     <span class="comment-votes-count
         <? if ($sum_votes > 0): ?>
             text-success
@@ -9,21 +12,11 @@
         <?= $sum_votes; ?>
     </span>
     <? if ($current_user_id !== $comment->user_id): ?>
-        <a href="<?= URL::get_default_url('votes', 'up').URL::query(
-            array(
-                'article_id' => $comment->article_id,
-                'comment_id' => $comment->id,
-                'user_id'    => $comment->user_id,
-            )); ?>" class="comment-votes-up btn btn-default">
-            <span class="glyphicon glyphicon-thumbs-up"></span>
-        </a>
-        <a href="<?= URL::get_default_url('votes', 'down').URL::query(
-            array(
-                'article_id' => $comment->article_id,
-                'comment_id' => $comment->id,
-                'user_id'    => $comment->user_id,
-            )); ?>" class="comment-votes-down btn btn-default">
-            <span class="glyphicon glyphicon-thumbs-down"></span>
-        </a>
+        <span class="comment-votes-button glyphicon glyphicon-thumbs-up"
+            data-value="<?= Model_Article_Comment_Vote::VOTE_UP; ?>"
+        ></span>
+        <span class="comment-votes-button glyphicon glyphicon-thumbs-down"
+            data-value="<?= Model_Article_Comment_Vote::VOTE_DOWN; ?>"
+        ></span>
     <? endif; ?>
 </div>

@@ -2,6 +2,9 @@
 
 class Model_Article_Comment_Vote extends ORM {
 
+    const VOTE_UP   = 1;
+    const VOTE_DOWN = -1;
+
     protected $_table_name = 'article_comment_votes';
 
     // belongs to - принадлежит к
@@ -20,6 +23,12 @@ class Model_Article_Comment_Vote extends ORM {
         ),
     );
 
+    /**
+     * Данный метод возвращает сумму лайков/дизлайков для данного комментария
+     *
+     * @return  mixed
+     * @throws  Kohana_Exception
+     */
     public function get_sum_votes_comment()
     {
         $result = $this->select(array(DB::expr('SUM(`value`)'), 'sum_votes'))
@@ -29,6 +38,12 @@ class Model_Article_Comment_Vote extends ORM {
         return $result;
     }
 
+    /**
+     * Данный метод возвращает сумму лайков/дизлайков для данного пользователя
+     *
+     * @param   $user_id  integer  user id
+     * @return  mixed
+     */
     public static function get_sum_votes_user($user_id)
     {
         $result = DB::select(array(DB::expr('SUM(`value`)'), 'sum_votes'))

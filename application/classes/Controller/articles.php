@@ -13,7 +13,9 @@ class Controller_Articles extends Controller_Content {
             'media/css/article.css',
         );
 
-        $scripts = array();
+        $scripts = array(
+            'media/js/votes.js',
+        );
 
         $this->template->styles = $styles;
         $this->template->scripts = $scripts;

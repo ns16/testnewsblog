@@ -67,38 +67,6 @@ class Controller_Comments extends Controller_Ajax {
 //        echo $this->widget;
 
         $this->set_answer();
-
-//        // Check that HTTP method is POST
-//        if (Request::POST == $this->request->method())
-//        {
-//            // Get values from POST array
-//            $post = $this->request->post();
-//
-//            // Get logged user
-//            $user = Auth::instance()->get_user();
-//
-//            // Check that user isn't defined
-//            if ( ! $user)
-//            {
-//                throw new HTTP_Exception_404;
-//            }
-//
-//            // Add comment into table
-//            ORM::factory('article_comment')
-//                ->values(array(
-//                    'article_id' => $article_id,
-//                    'user_id'    => $user->id,
-//                    'content'    => $post['content'],
-//                ))
-//                ->save();
-//
-//            // Redirect to page of view article with given id
-//            $this->redirect(URL::get_default_url(
-//                'articles',
-//                '',
-//                $article_id
-//            ));
-//        }
     }
 
     protected function set_answer()

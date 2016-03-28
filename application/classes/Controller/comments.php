@@ -2,81 +2,49 @@
 
 class Controller_Comments extends Controller_Ajax {
 
-    protected $current_user_id = NULL;
-    protected $article_id      = NULL;
-    protected $content         = NULL;
-
-    protected $message         = NULL;
-    protected $username        = NULL;
-    protected $date            = NULL;
-    protected $widget          = NULL;
-
     public function action_form()
     {
         // Get value of POST array
         $post = $this->request->post();
 
         // Get id of current user
-        $current_user = Auth::instance()->get_user();
-        $this->current_user_id = isset($current_user) ? $current_user->id : NULL;
+        $user = Auth::instance()->get_user();
+        $user_id = isset($user) ? $user->id : NULL;
 
         // Get id of article and content of comment
-        $this->article_id = Arr::get($post, 'article_id');
-        $this->content = Arr::get($post, 'content');
+        $article_id = Arr::get($post, 'article_id');
+        $content = Arr::get($post, 'content');
 
         // Check that article_id isn't exists
-        if ( ! $this->article_id)
+        if ( ! $article_id)
         {
             throw new HTTP_Exception_404;
         }
 
-        // If user isn't logged
-        if ( ! $this->current_user_id)
-        {
-            $this->message = 'Авторизуйтесь или зарегистрируйтесь, чтобы оставить комментарий!';
-            $this->set_answer();
-            return;
-        }
-
         // If content of comment is empty
-        if ( ! $this->content)
+        if ( ! $content)
         {
-            $this->message = 'Сначала введите комментарий!';
-            $this->set_answer();
+            $this->answer(array(
+                'error' => 'Сначала введите комментарий!',
+            ));
             return;
         }
 
         // Add comment into table
         $comment = ORM::factory('article_comment')
             ->values(array(
-                'article_id' => $this->article_id,
-                'user_id'    => $this->current_user_id,
-                'content'    => $this->content,
+                'article_id' => $article_id,
+                'user_id'    => $user_id,
+                'content'    => $content,
             ))
-            ->save();
+            ->save()->reload();
 
-        $this->username = $comment->user->username;
-        $this->date = Date::rus_date_format(time());
-        $this->widget = Widget::factory('votes', array('comment' => $comment));
+        $view = (string) View::factory('widget/comments/_comment')->set('comment', $comment);
 
-//        var_dump($comment);
-//        var_dump($this->username);
-//        var_dump($this->date);
-//        var_dump($this->widget);
-
-//        echo $this->widget;
-
-        $this->set_answer();
-    }
-
-    protected function set_answer()
-    {
-        $this->answer = array(
-            'message'   => $this->message,
-            'username'  => $this->username,
-            'date'      => $this->date,
-            'widget'    => $this->widget,
-        );
+        $this->answer(array(
+            'body'   => $view,
+            'status' => 1,
+        ));
     }
 
     public function action_delete()

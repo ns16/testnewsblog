@@ -16,30 +16,12 @@ submit.onclick = function()
         dataType: "json",
         success: function(data)
         {
-            if (data.message)
-            {
-                alert(data.message);
-            }
+            var comments = document.getElementById("comments");
 
-            if (content)
-            {
-                var comments = document.getElementById("comments");
-
-                var comment_html =
-                    "<div class='comment'>" +
-                        "<div class='comment-info'>" +
-                            "<strong>" + data.username + "</strong> / " +
-                            "<em>" + data.date + "</em>" +
-                        "</div>" +
-                        "<div class='comment-content'>" +
-                            content +
-                        "</div>" +
-                        data.widget +
-                    "</div>";
-
-                comments.innerHTML += comment_html;
-
-                textarea.value = '';
+            if (data.status) {
+                comments.innerHTML += data.body;
+            } else {
+                alert(data.error);
             }
         },
         error: function(jqXHR)

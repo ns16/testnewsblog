@@ -4,6 +4,7 @@ class Controller_Ajax extends Controller {
 
     protected $answer = array(
         'status' => 0,
+        'error'  => '',
         'body'   => '',
     );
 
@@ -24,9 +25,9 @@ class Controller_Ajax extends Controller {
         echo json_encode($this->answer);
     }
 
-//    protected function answer(array $array = array())
-//    {
-//        $this->answer = Arr::merge($this->answer, $array);
-//    }
+    protected function answer(array $array = array())
+    {
+        $this->answer = Arr::merge($this->answer, $array);
+    }
 
 } // End Ajax

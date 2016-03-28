@@ -24,8 +24,11 @@ class Controller_Body extends Controller_Template {
             'media/css/style.css',
         );
 
+        $scripts = array();
+
         $this->template->title = 'Главная страница';
         $this->template->styles = $styles;
+        $this->template->scripts = $scripts;
         $this->template->body = $this->body;
     }
 

@@ -10,9 +10,9 @@
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 
-    <? foreach ($styles as $style): ?>
+    <?php foreach ($styles as $style): ?>
         <?= HTML::style($style); ?>
-    <? endforeach; ?>
+    <?php endforeach; ?>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -28,5 +28,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="/js/bootstrap.min.js"></script>
+
+    <?php foreach ($scripts as $script): ?>
+        <?= HTML::script($script); ?>
+    <?php endforeach; ?>
 </body>
 </html>

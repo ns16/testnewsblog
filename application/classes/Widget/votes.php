@@ -12,6 +12,7 @@ class Widget_Votes extends Widget {
         $view = View::factory('widget/votes');
 
         $sum_votes = $this->comment->votes->get_sum_votes_comment();
+
         $current_user_id = isset($this->user) ? $this->user->id : NULL;
 
         $view->set(array(

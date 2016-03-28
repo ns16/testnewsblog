@@ -16,33 +16,33 @@
             <div id="container-personal-birthdate" class="col-md-8">
                 <select class="form-control" name="year">
                     <option value="0">--</option>
-                    <? foreach ($years as $year): ?>
+                    <?php foreach ($years as $year): ?>
                         <option value="<?= $year; ?>"
-                            <? if (Arr::get($settings, 'year') == $year): ?>
+                            <?php if (Arr::get($settings, 'year') == $year): ?>
                                 selected="selected"
                             <? endif; ?>
                         ><?= $year; ?></option>
-                    <? endforeach; ?>
+                    <?php endforeach; ?>
                 </select>
                 <select class="form-control" name="month">
                     <option value="0">--</option>
-                    <? foreach ($months as $month => $month_name): ?>
+                    <?php foreach ($months as $month => $month_name): ?>
                         <option value="<?= $month; ?>"
-                            <? if (Arr::get($settings, 'month') == $month): ?>
+                            <?php if (Arr::get($settings, 'month') == $month): ?>
                                 selected="selected"
-                            <? endif; ?>
+                            <?php endif; ?>
                         ><?= $month_name; ?></option>
-                    <? endforeach; ?>
+                    <?php endforeach; ?>
                 </select>
                 <select class="form-control" name="day">
                     <option value="0">--</option>
-                    <? foreach ($days as $day): ?>
+                    <?php foreach ($days as $day): ?>
                         <option value="<?= $day; ?>"
-                            <? if (Arr::get($settings, 'day') == $day): ?>
+                            <?php if (Arr::get($settings, 'day') == $day): ?>
                                 selected="selected"
-                            <? endif; ?>
+                            <?php endif; ?>
                         ><?= $day; ?></option>
-                    <? endforeach; ?>
+                    <?php endforeach; ?>
                 </select>
             </div>
             <div class="col-md-12 text-danger">
@@ -55,13 +55,13 @@
             <div class="col-md-8">
                 <select id="sex" class="form-control" name="sex">
                     <option value="0">--</option>
-                    <? foreach ($sexes as $sex => $sex_name): ?>
+                    <?php foreach ($sexes as $sex => $sex_name): ?>
                         <option value="<?= $sex; ?>"
-                            <? if ($settings['sex'] == $sex): ?>
+                            <?php if ($settings['sex'] == $sex): ?>
                                 selected="selected"
-                            <? endif; ?>
+                            <?php endif; ?>
                         ><?= $sex_name; ?></option>
-                    <? endforeach; ?>
+                    <?php endforeach; ?>
                 </select>
             </div>
             <div class="col-md-12 text-danger">

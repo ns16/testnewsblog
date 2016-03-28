@@ -1,7 +1,7 @@
 <div id="comments">
-    <? if ($comments->count()): ?>
+    <?php if ($comments->count()): ?>
         <h4>Комментарии</h4>
-        <? foreach ($comments as $comment): ?>
+        <?php foreach ($comments as $comment): ?>
             <div class="comment">
                 <div class="comment-info">
                     <strong><?= $comment->user->username; ?></strong>
@@ -13,8 +13,8 @@
                 </div>
                 <?= Widget::factory('votes', array('comment' => $comment)); ?>
             </div>
-        <? endforeach; ?>
-    <? endif; ?>
+        <?php endforeach; ?>
+    <?php endif; ?>
 
     <?= Widget::factory('comments_form', array('article' => $article)); ?>
 </div>
@@ -25,7 +25,8 @@
 
     for (var i = 0; i < votes_buttons.length; i++)
     {
-        votes_buttons[i].onclick = function() {
+        votes_buttons[i].onclick = function()
+        {
             votes_buttons_handler(this)
         }
     }
@@ -47,8 +48,8 @@
                 vote: vote
             },
             dataType: "json",
-            success: function(data) {
-
+            success: function(data)
+            {
                 if (data.message)
                 {
                     alert(data.message);
@@ -56,12 +57,14 @@
 
                 if (data.sum_votes)
                 {
+                    var sum_votes_class = null;
+
                     if (data.sum_votes > 0) {
-                        var sum_votes_class = "text-success";
+                        sum_votes_class = "text-success";
                     } else if (data.sum_votes < 0) {
-                        var sum_votes_class = "text-danger";
+                        sum_votes_class = "text-danger";
                     } else {
-                        var sum_votes_class = "";
+                        sum_votes_class = "";
                     }
 
                     var sum_votes_html =
@@ -71,7 +74,8 @@
                     votes_count.innerHTML = sum_votes_html;
                 }
             },
-            error: function(jqXHR) {
+            error: function(jqXHR)
+            {
                 console.log(
                     'Error: ' + jqXHR.status +
                     ', Message: ' + jqXHR.statusText

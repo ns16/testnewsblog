@@ -13,7 +13,10 @@ class Controller_Articles extends Controller_Content {
             'media/css/article.css',
         );
 
+        $scripts = array();
+
         $this->template->styles = $styles;
+        $this->template->scripts = $scripts;
     }
 
     public function action_view()

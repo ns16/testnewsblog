@@ -1,7 +1,7 @@
 <div id="comments">
-    <? if ($comments->count()): ?>
+    <?php if ($comments->count()): ?>
         <h4>Комментарии</h4>
-        <? foreach ($comments as $comment): ?>
+        <?php foreach ($comments as $comment): ?>
             <div class="comment">
                 <div class="comment-info">
                     <strong><?= $comment->user->username; ?></strong>
@@ -13,8 +13,8 @@
                 </div>
                 <?= Widget::factory('votes', array('comment' => $comment)); ?>
             </div>
-        <? endforeach; ?>
-    <? endif; ?>
+        <?php endforeach; ?>
+    <?php endif; ?>
 
     <?= Widget::factory('comments_form', array('article' => $article)); ?>
 </div>

@@ -7,27 +7,27 @@
             <div id="information-personal-title">
                 <h3><?= $username; ?></h3>
             </div>
-            <? foreach ($personal_data as $key => $value): ?>
-                <? if ($value): ?>
+            <?php foreach ($personal_data as $key => $value): ?>
+                <?php if ($value): ?>
                     <div class="information-personal-item">
                         <span><?= $key; ?>:</span>
                         <span><?= $value; ?></span>
                     </div>
-                <? endif; ?>
-            <? endforeach; ?>
+                <?php endif; ?>
+            <?php endforeach; ?>
         </div>
         <div id="information-social">
             <div id="information-social-button">
                 <a href="<?= URL::get_user_default_url('settings', 'personal', $user_id); ?>" id="information-social-button" class="btn btn-default">Настройки</a>
             </div>
             <div id="information-social-icons">
-                <? foreach ($social_data as $key => $value): ?>
-                    <? if ($value): ?>
+                <?php foreach ($social_data as $key => $value): ?>
+                    <?php if ($value): ?>
                         <a href="<?= $value; ?>" class="information-social-icon btn btn-default">
                             <span class="<?= $key; ?>"></span>
                         </a>
-                    <? endif; ?>
-                <? endforeach; ?>
+                    <?php endif; ?>
+                <?php endforeach; ?>
             </div>
         </div>
     </div>
@@ -50,9 +50,9 @@
     </div>
     <div id="comments" class="block">
         <h4>Комментарии к статьям</h4>
-        <? if ($comments_count): ?>
-            <? foreach($comments as $comment): ?>
-                <? $sum_votes = $comment->votes->get_sum_votes_comment(); ?>
+        <?php if ($comments_count): ?>
+            <?php foreach($comments as $comment): ?>
+                <?php $sum_votes = $comment->votes->get_sum_votes_comment(); ?>
                 <div class="comment">
                     <div class="thumbnail">
                         <div class="comment-info">
@@ -60,11 +60,11 @@
                                 <?= $comment->date; ?>
                             </div>
                             <div class="comment-info-votes
-                                <? if ($sum_votes > 0): ?>
+                                <?php if ($sum_votes > 0): ?>
                                     text-success
-                                <? elseif ($sum_votes < 0): ?>
+                                <?php elseif ($sum_votes < 0): ?>
                                     text-danger
-                                <? endif; ?>
+                                <?php endif; ?>
                             ">
                                 <span><?= $sum_votes; ?></span>
                                 <span class="glyphicon glyphicon-flash"></span>
@@ -86,15 +86,15 @@
                         <span class="glyphicon glyphicon-remove"></span>
                     </a>
                 </div>
-            <? endforeach; ?>
-        <? else: ?>
+            <?php endforeach; ?>
+        <?php else: ?>
             <div id="comments-message">У вас нет комментариев к статьям</div>
-        <? endif; ?>
+        <?php endif; ?>
     </div>
     <div id="articles" class="block">
         <h4>Избранные статьи</h4>
-        <? if ($articles_count): ?>
-        <? foreach($articles as $article): ?>
+        <?php if ($articles_count): ?>
+        <?php foreach($articles as $article): ?>
             <div class="article">
                 <div class="thumbnail">
                     <img src="http://fakeimg.pl/260x180/EEEEEE/AAA/?text=260x180" alt="">
@@ -109,9 +109,9 @@
                     </div>
                 </div>
             </div>
-        <? endforeach; ?>
-        <? else: ?>
+        <?php endforeach; ?>
+        <?php else: ?>
             <div id="articles-message">У вас нет избранных статей</div>
-        <? endif; ?>
+        <?php endif; ?>
     </div>
 </div>

@@ -1,11 +1,11 @@
 <div id="article-title-favorite">
     <button id="article-title-favorite-button" class="btn btn-default">
         <span class="glyphicon
-        <? if (in_array($current_user_id, $user_ids)): ?>
+        <?php if (in_array($current_user_id, $user_ids)): ?>
             glyphicon-star
-        <? else: ?>
+        <?php else: ?>
             glyphicon-star-empty
-        <? endif; ?>
+        <?php endif; ?>
         "></span>
     </button>
 </div>

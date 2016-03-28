@@ -12,6 +12,7 @@ class Controller_Votes extends Controller_Ajax {
 
     public function action_index()
     {
+        // Get value of POST array
         $post = $this->request->post();
 
         // Get id of current user
@@ -45,7 +46,7 @@ class Controller_Votes extends Controller_Ajax {
             return;
         }
 
-        // Set values for fields
+        // Add vote into table
         ORM::factory('article_comment_vote')
             ->values(array(
                 'comment_id' => $this->comment_id,

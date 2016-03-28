@@ -34,7 +34,9 @@ class Date extends Kohana_Date {
 
     public static function rus_date_format($date)
     {
-        $str_date = strftime('%H:%M, %d %B %Y', strtotime($date));
+        $date = is_string($date) ? strtotime($date) : $date;
+
+        $str_date = strftime('%H:%M, %d %B %Y', $date);
 
         $eng_months = Date::months(Date::MONTHS_LONG);
 

@@ -58,8 +58,9 @@ function votes_buttons_handler(elem)
                 }
 
                 var sum_votes_html =
-                    "<span class='comment-votes-count " +
-                    sum_votes_class + "'>" + data.sum_votes + "</span>";
+                    "<span class='comment-votes-count " + sum_votes_class + "'>" +
+                        data.sum_votes +
+                    "</span>";
 
                 votes_count.innerHTML = sum_votes_html;
             }

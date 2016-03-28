@@ -14,6 +14,7 @@ class Controller_Articles extends Controller_Content {
         );
 
         $scripts = array(
+            'media/js/comments.js',
             'media/js/votes.js',
         );
 

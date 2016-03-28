@@ -20,9 +20,12 @@
 </div>
 <script>
 
+    // Получить кнопки голосования для каждого из комментариев
     var votes_buttons = document.getElementsByClassName("comment-votes-button");
     var votes_count   = null;
 
+    // Для каждой из кнопок голосования назначить обработчик события "клик
+    // левой клавишей мыши"
     for (var i = 0; i < votes_buttons.length; i++)
     {
         votes_buttons[i].onclick = function()
@@ -33,8 +36,12 @@
 
     function votes_buttons_handler(elem)
     {
+        // Получить элемент, в который нужно будет записать сумму голосов
         votes_count    = elem.parentElement.firstElementChild;
 
+        // Получить идентификаторы комментария и пользователя, который этот
+        // комментарий оставил, а также значение голоса, которое может быть
+        // равно 1 или -1
         var comment_id = elem.parentElement.dataset.comment_id;
         var user_id    = elem.parentElement.dataset.user_id;
         var vote       = elem.dataset.value;
@@ -50,11 +57,16 @@
             dataType: "json",
             success: function(data)
             {
+                // Вывести модальное окно с сообщением, если пользователь не
+                // авторизован или если пользователь уже проголосовал за данный
+                // комментарий
                 if (data.message)
                 {
                     alert(data.message);
                 }
 
+                // Вывести сумму голосов, учитывая голос, оставленный данным
+                // пользователем
                 if (data.sum_votes)
                 {
                     var sum_votes_class = null;

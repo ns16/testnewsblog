@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
-class Controller_Votes extends Controller {
+class Controller_Votes extends Controller_Ajax {
 
     protected $current_user_id = NULL;
     protected $comment_id      = NULL;
@@ -14,27 +14,34 @@ class Controller_Votes extends Controller {
     {
         $post = $this->request->post();
 
+        // Get id of current user
         $current_user = Auth::instance()->get_user();
         $this->current_user_id = isset($current_user) ? $current_user->id : NULL;
 
+        // Get id of comment, id of user, who posted comment, and value of vote
         $this->comment_id = Arr::get($post, 'comment_id');
         $this->user_id = Arr::get($post, 'user_id');
         $this->vote = Arr::get($post, 'vote');
+
+        // If value of vote isn't valid or current user is author of this comment
+        if ($this->vote_is_not_valid() OR $this->is_author_of_comment())
+        {
+            throw new HTTP_Exception_404;
+        }
 
         // If user isn't logged
         if ( ! $this->current_user_id)
         {
             $this->message = 'Авторизуйтесь или зарегистрируйтесь, чтобы проголосовать!';
-            $this->send_json();
+            $this->set_answer();
             return;
         }
 
-        // Check that current user already voted to this comment or he is author
-        // of this comment
-        if ($this->ban_vote())
+        // If current user already voted to this comment
+        if ($this->already_voted())
         {
-            $this->message = 'Вы уже голосовали за данный комментарий!';
-            $this->send_json();
+            $this->message = 'Вы уже проголосовали за данный комментарий!';
+            $this->set_answer();
             return;
         }
 
@@ -47,20 +54,32 @@ class Controller_Votes extends Controller {
             ))
             ->save();
 
+        // Get sum of votes of given comment
         $comment = ORM::factory('article_comment', $this->comment_id);
         $this->sum_votes = $comment->votes->get_sum_votes_comment();
 
-        $this->send_json();
+        $this->set_answer();
     }
 
-    protected function send_json()
+    protected function set_answer()
     {
-        $answer = array(
+        $this->answer = array(
             'message'   => $this->message,
             'sum_votes' => $this->sum_votes,
         );
+    }
 
-        echo json_encode($answer);
+    /**
+     * Данный метод проверяет, является значение оставленного пользователем
+     * голоса невалидным
+     *
+     * @return bool
+     */
+    protected function vote_is_not_valid()
+    {
+        return
+            $this->vote != Model_Article_Comment_Vote::VOTE_DOWN
+            AND $this->vote != Model_Article_Comment_Vote::VOTE_UP;
     }
 
     /**
@@ -71,7 +90,7 @@ class Controller_Votes extends Controller {
      */
     protected function ban_vote()
     {
-        return $this->is_author_comment() OR $this->already_voted();
+        return $this->is_author_of_comment() OR $this->already_voted();
     }
 
     /**
@@ -80,7 +99,7 @@ class Controller_Votes extends Controller {
      *
      * @return bool
      */
-    protected function is_author_comment()
+    protected function is_author_of_comment()
     {
         return $this->current_user_id == $this->user_id;
     }

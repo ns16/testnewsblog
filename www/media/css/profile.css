@@ -109,13 +109,13 @@
     position: relative;
     display: inline-block;
     width: 560px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 4px;
     margin-bottom: 20px;
     text-align: left;
     vertical-align: top;
     font-size: 14px;
-}
-.comment > .thumbnail {
-    margin-bottom: 0;
 }
 .comment-remove {
     position: absolute;
@@ -159,7 +159,10 @@
 .article {
     display: inline-block;
     width: 270px;
-    margin-right: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 4px;
+    margin: 0 20px 20px 0;
     vertical-align: top;
     font-size: 14px;
 }

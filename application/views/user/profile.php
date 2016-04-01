@@ -54,29 +54,27 @@
             <?php foreach($comments as $comment): ?>
                 <?php $sum_votes = $comment->votes->get_sum_votes_comment(); ?>
                 <div class="comment">
-                    <div class="thumbnail">
-                        <div class="comment-info">
-                            <div class="comment-info-date">
-                                <?= $comment->date; ?>
-                            </div>
-                            <div class="comment-info-votes
-                                <?php if ($sum_votes > 0): ?>
-                                    text-success
-                                <?php elseif ($sum_votes < 0): ?>
-                                    text-danger
-                                <?php endif; ?>
-                            ">
-                                <span><?= $sum_votes; ?></span>
-                                <span class="glyphicon glyphicon-flash"></span>
-                            </div>
+                    <div class="comment-info">
+                        <div class="comment-info-date">
+                            <?= $comment->date; ?>
                         </div>
-                        <div class="comment-content">
-                            <?= $comment->content; ?>
+                        <div class="comment-info-votes
+                            <?php if ($sum_votes > 0): ?>
+                                text-success
+                            <?php elseif ($sum_votes < 0): ?>
+                                text-danger
+                            <?php endif; ?>
+                        ">
+                            <span><?= $sum_votes; ?></span>
+                            <span class="glyphicon glyphicon-flash"></span>
                         </div>
-                        <div class="comment-article">
-                            <span>К статье: </span>
-                            <a href="<?= URL::get_default_url('articles', '', $comment->article->id); ?>"><?= $comment->article->title; ?></a>
-                        </div>
+                    </div>
+                    <div class="comment-content">
+                        <?= $comment->content; ?>
+                    </div>
+                    <div class="comment-article">
+                        <span>К статье: </span>
+                        <a href="<?= URL::get_default_url('articles', '', $comment->article->id); ?>"><?= $comment->article->title; ?></a>
                     </div>
                     <a class="comment-remove" href="<?= URL::get_default_url('comments', 'delete').URL::query(
                         array(
@@ -94,9 +92,8 @@
     <div id="articles" class="block">
         <h4>Избранные статьи</h4>
         <?php if ($articles_count): ?>
-        <?php foreach($articles as $article): ?>
-            <div class="article">
-                <div class="thumbnail">
+            <?php foreach($articles as $article): ?>
+                <div class="article">
                     <img src="http://fakeimg.pl/260x180/EEEEEE/AAA/?text=260x180" alt="">
                     <div class="article-caption">
                         <div class="article-caption-title">
@@ -108,8 +105,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        <?php endforeach; ?>
+            <?php endforeach; ?>
         <?php else: ?>
             <div id="articles-message">У вас нет избранных статей</div>
         <?php endif; ?>

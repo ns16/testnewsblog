@@ -13,8 +13,13 @@ class Controller_User_Profile extends Controller_User_Base {
             'media/css/profile.css',
         );
 
+        $scripts = array(
+            'media/js/profile.js',
+        );
+
         $this->template->title = 'Мой профиль';
         $this->template->styles = $styles;
+        $this->template->scripts = $scripts;
     }
 
     public function action_index()

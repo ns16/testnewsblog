@@ -14,7 +14,8 @@ class Controller_User_Profile extends Controller_User_Base {
         );
 
         $scripts = array(
-            'media/js/profile.js',
+            'media/js/profile/comments.js',
+            'media/js/profile/favorites.js',
         );
 
         $this->template->title = 'Мой профиль';

@@ -30,4 +30,18 @@ class Model_Article_Comment extends ORM {
 			'foreign_key' => 'comment_id',
 		)
 	);
+
+	/**
+	 * Данный метод проверяет, принадлежит ли комментарий с данным идентификатором
+	 * текущему пользователю
+	 *
+	 * @param   integer  $comment_id       id of comment
+	 * @param   integer  $current_user_id  id of current user
+	 * @return  bool
+	 */
+	public static function comment_belongs_to_user($comment_id, $current_user_id)
+	{
+		$user_id = ORM::factory('article_comment', $comment_id)->user_id;
+		return $user_id == $current_user_id;
+	}
 }

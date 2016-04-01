@@ -51,19 +51,29 @@ class Controller_Comments extends Controller_Ajax {
 
     public function action_delete()
     {
-        // Get id of comment
-        $comment_id = $this->request->query('comment_id');
-        // Get id of user
-        $user_id = $this->request->query('user_id');
+        // Get value of POST array
+        $post = $this->request->post();
+
+        // Get id of current user
+        $current_user = Auth::instance()->get_user();
+        $current_user_id = isset($current_user) ? $current_user->id : NULL;
+
+        // Get id of article and content of comment. Convert special characters in
+        // HTML-entities
+        $comment_id = Arr::get($post, 'comment_id');
+
+        // If id of comment isn't defind or comment with given id doesn't belong to
+        // current user
+        if ( ! $comment_id OR ! Model_Article_Comment::comment_belongs_to_user($comment_id, $current_user_id))
+        {
+            throw new HTTP_Exception_404;
+        }
 
         // Delete comment from table
         ORM::factory('article_comment', $comment_id)->delete();
 
-        // Redirect to page of personal data
-        $this->redirect(URL::get_user_default_url(
-            'profile',
-            'index',
-            $user_id
+        $this->answer(array(
+            'status' => 1,
         ));
     }
 

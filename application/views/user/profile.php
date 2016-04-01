@@ -53,37 +53,7 @@
         <?php if ($comments_count): ?>
             <?php foreach($comments as $comment): ?>
                 <?php $sum_votes = $comment->votes->get_sum_votes_comment(); ?>
-                <div class="comment">
-                    <div class="comment-info">
-                        <div class="comment-info-date">
-                            <?= $comment->date; ?>
-                        </div>
-                        <div class="comment-info-votes
-                            <?php if ($sum_votes > 0): ?>
-                                text-success
-                            <?php elseif ($sum_votes < 0): ?>
-                                text-danger
-                            <?php endif; ?>
-                        ">
-                            <span><?= $sum_votes; ?></span>
-                            <span class="glyphicon glyphicon-flash"></span>
-                        </div>
-                    </div>
-                    <div class="comment-content">
-                        <?= $comment->content; ?>
-                    </div>
-                    <div class="comment-article">
-                        <span>К статье: </span>
-                        <a href="<?= URL::get_default_url('articles', '', $comment->article->id); ?>"><?= $comment->article->title; ?></a>
-                    </div>
-                    <a class="comment-remove" href="<?= URL::get_default_url('comments', 'delete').URL::query(
-                        array(
-                            'comment_id' => $comment->id,
-                            'user_id'    => $user_id,
-                        )); ?>">
-                        <span class="glyphicon glyphicon-remove"></span>
-                    </a>
-                </div>
+                <?= View::factory('user/profile/_comment')->set(array('user_id' => $user_id, 'comment' => $comment, 'sum_votes' => $sum_votes)); ?>
             <?php endforeach; ?>
         <?php else: ?>
             <div id="comments-message">У вас нет комментариев к статьям</div>
@@ -93,18 +63,7 @@
         <h4>Избранные статьи</h4>
         <?php if ($articles_count): ?>
             <?php foreach($articles as $article): ?>
-                <div class="article">
-                    <img src="http://fakeimg.pl/260x180/EEEEEE/AAA/?text=260x180" alt="">
-                    <div class="article-caption">
-                        <div class="article-caption-title">
-                            <?= $article->title; ?>
-                        </div>
-                        <div class="article-caption-buttons">
-                            <a href="<?= URL::get_default_url('articles', '', $article->id); ?>" class="btn btn-default">Подробнее</a>
-                            <a href="<?= URL::get_url('favorites_default', 'profile', 'index', $article->id, 'favorites'); ?>" class="btn btn-default">Удалить</a>
-                        </div>
-                    </div>
-                </div>
+                <?= View::factory('user/profile/_article')->set('article', $article); ?>
             <?php endforeach; ?>
         <?php else: ?>
             <div id="articles-message">У вас нет избранных статей</div>

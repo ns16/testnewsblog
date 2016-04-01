@@ -173,4 +173,24 @@ class Model_User extends Model_Auth_User {
             'password' => 'Пароль',
         );
     }
+
+    /**
+     * Данный метод возвращает идентификаторы тех пользователей, которые добавили
+     * статью с даннным идентификатором в избранное
+     *
+     * @param   integer  $article_id  id of article
+     * @return  array
+     */
+    public static function get_user_ids($article_id)
+    {
+        $users = ORM::factory('article', $article_id)->users->find_all()->as_array();
+
+        $user_ids = array();
+
+        foreach ($users as $user) {
+            $user_ids[] = $user->id;
+        }
+
+        return $user_ids;
+    }
 }

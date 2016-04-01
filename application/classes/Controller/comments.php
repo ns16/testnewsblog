@@ -17,7 +17,7 @@ class Controller_Comments extends Controller_Ajax {
         $content = HTML::chars(Arr::get($post, 'content'));
 
         // If id of article isn't defind or article with given id isn't exist
-        if ( ! $article_id OR ! $this->article_exists($article_id))
+        if ( ! $article_id OR ! Model_Article::article_exists($article_id))
         {
             throw new HTTP_Exception_404;
         }
@@ -44,8 +44,8 @@ class Controller_Comments extends Controller_Ajax {
         $view = (string) View::factory('widget/comments/_comment')->set('comment', $comment);
 
         $this->answer(array(
-            'body'   => $view,
             'status' => 1,
+            'body'   => $view,
         ));
     }
 
@@ -65,17 +65,6 @@ class Controller_Comments extends Controller_Ajax {
             'index',
             $user_id
         ));
-    }
-
-    /**
-     * Данный метод проверяет, существует ли статья с данным идентификатором
-     *
-     * @param   integer  $article_id  id of article
-     * @return  bool
-     */
-    public static function article_exists($article_id)
-    {
-        return ORM::factory('article', $article_id)->loaded();
     }
 
 } // End Comments

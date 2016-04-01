@@ -11,35 +11,22 @@ class Widget_Favorite extends Widget {
     {
         $view = View::factory('widget/favorite');
 
+        // Get id of article
+        $article_id = $this->article->id;
+
         // Get id of current user
         $current_user_id = isset($this->user) ? $this->user->id : NULL;
 
-        // Get users that have this article as favorite
-        $users = $this->article->users
-            ->find_all()
-            ->as_array();
-
         // Get ids of users
-        $user_ids = $this->get_user_ids($users);
+        $user_ids = Model_User::get_user_ids($article_id);
 
         // Set variable of view
         $view->set(array(
-            'article_id'      => $this->article->id,
+            'article_id'      => $article_id,
             'current_user_id' => $current_user_id,
             'user_ids'        => $user_ids,
         ));
 
         return $view;
-    }
-
-    protected function get_user_ids(array $users = array())
-    {
-        $user_ids = array();
-
-        foreach ($users as $user) {
-            $user_ids[] = $user->id;
-        }
-
-        return $user_ids;
     }
 }

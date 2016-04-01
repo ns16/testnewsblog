@@ -3,11 +3,18 @@ var submit   = document.getElementById("comments-form-main-submit");
 var textarea = document.getElementById("comments-form-main-textarea");
 
 // Для кнопки отправки формы назначить обработчик события "клик левой клавишей мыши"
-submit.onclick = function()
+if (submit)
+{
+    submit.onclick = function() {
+        submit_handler(this);
+    }
+}
+
+function submit_handler(elem)
 {
     // Получить идентификатор статьи, к которой пользователь оставил комментарий, и
     // содержание комментария
-    var article_id = this.dataset.article_id;
+    var article_id = elem.dataset.article_id;
     var content    = textarea.value;
 
     $.ajax({

@@ -56,8 +56,8 @@ class Controller_Votes extends Controller_Ajax {
         $view = (string) View::factory('widget/votes/_sum')->set('sum_votes', $sum_votes);
 
         $this->answer(array(
-            'body'   => $view,
             'status' => 1,
+            'body'   => $view,
         ));
     }
 

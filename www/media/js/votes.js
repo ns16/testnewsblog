@@ -13,7 +13,8 @@ for (var i = 0; i < buttons.length; i++)
 function buttons_handler(elem)
 {
     // Получить идентификатор комментария, идентификатор пользователя, который
-    // оставил этот комментарий, и значение голоса, которое может быть равно 1 или -1
+    // оставил этот комментарий, и значение голоса, которое может быть равно 1
+    // или -1
     var comment_id = elem.parentElement.dataset.comment_id;
     var user_id    = elem.parentElement.dataset.user_id;
     var vote       = elem.dataset.vote;

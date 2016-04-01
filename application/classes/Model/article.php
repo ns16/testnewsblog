@@ -20,4 +20,15 @@ class Model_Article extends ORM {
             'through' => 'user_articles',
         ),
     );
+
+    /**
+     * Данный метод проверяет, существует ли статья с данным идентификатором
+     *
+     * @param   integer  $id  id of article
+     * @return  bool
+     */
+    public static function article_exists($article_id)
+    {
+        return ORM::factory('article', $article_id)->loaded();
+    }
 }

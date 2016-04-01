@@ -24,7 +24,7 @@ class Model_Article extends ORM {
     /**
      * Данный метод проверяет, существует ли статья с данным идентификатором
      *
-     * @param   integer  $id  id of article
+     * @param   integer  $article_id  id of article
      * @return  bool
      */
     public static function article_exists($article_id)

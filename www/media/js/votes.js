@@ -1,28 +1,22 @@
-// Получить кнопки голосования для каждого из комментариев
-var votes_buttons = document.getElementsByClassName("comment-votes-button");
-var votes_count   = null;
+// Получить кнопки голосования для каждого комментария
+var buttons = document.getElementsByClassName("comment-votes-button");
 
-// Для каждой из кнопок голосования назначить обработчик события "клик
-// левой клавишей мыши"
-for (var i = 0; i < votes_buttons.length; i++)
+// Для каждой кнопки голосования назначить обработчик события "клик левой клавишей
+// мыши"
+for (var i = 0; i < buttons.length; i++)
 {
-    votes_buttons[i].onclick = function()
-    {
-        votes_buttons_handler(this)
+    buttons[i].onclick = function() {
+        buttons_handler(this)
     }
 }
 
-function votes_buttons_handler(elem)
+function buttons_handler(elem)
 {
-    // Получить элемент, в который нужно будет записать сумму голосов
-    votes_count    = elem.parentElement.firstElementChild;
-
-    // Получить идентификаторы комментария и пользователя, который этот
-    // комментарий оставил, а также значение голоса, которое может быть
-    // равно 1 или -1
+    // Получить идентификатор комментария, идентификатор пользователя, который
+    // оставил этот комментарий, и значение голоса, которое может быть равно 1 или -1
     var comment_id = elem.parentElement.dataset.comment_id;
     var user_id    = elem.parentElement.dataset.user_id;
-    var vote       = elem.dataset.value;
+    var vote       = elem.dataset.vote;
 
     $.ajax({
         url: "/votes/index",
@@ -35,34 +29,11 @@ function votes_buttons_handler(elem)
         dataType: "json",
         success: function(data)
         {
-            // Вывести модальное окно с сообщением, если пользователь не
-            // авторизован или если пользователь уже проголосовал за данный
-            // комментарий
-            if (data.message)
-            {
-                alert(data.message);
-            }
-
-            // Вывести сумму голосов, учитывая голос, оставленный данным
-            // пользователем
-            if (data.sum_votes)
-            {
-                var sum_votes_class = null;
-
-                if (data.sum_votes > 0) {
-                    sum_votes_class = "text-success";
-                } else if (data.sum_votes < 0) {
-                    sum_votes_class = "text-danger";
-                } else {
-                    sum_votes_class = "";
-                }
-
-                var sum_votes_html =
-                    "<span class='comment-votes-count " + sum_votes_class + "'>" +
-                        data.sum_votes +
-                    "</span>";
-
-                votes_count.innerHTML = sum_votes_html;
+            if (data.status) {
+                var votes = elem.parentElement.firstElementChild;
+                votes.innerHTML = data.body;
+            } else {
+                alert(data.error);
             }
         },
         error: function(jqXHR)

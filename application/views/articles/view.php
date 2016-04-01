@@ -12,4 +12,5 @@
         <?= Text::wrap_in_p($article->content); ?>
     </div>
 </div>
+
 <?= Widget::factory('comments', array('article' => $article)); ?>

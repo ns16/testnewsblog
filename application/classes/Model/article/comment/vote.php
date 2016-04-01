@@ -41,7 +41,7 @@ class Model_Article_Comment_Vote extends ORM {
     /**
      * Данный метод возвращает сумму лайков/дизлайков для данного пользователя
      *
-     * @param   $user_id  integer  user id
+     * @param   integer  $user_id  id of user
      * @return  mixed
      */
     public static function get_sum_votes_user($user_id)

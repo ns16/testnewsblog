@@ -8,15 +8,16 @@ class Controller_Comments extends Controller_Ajax {
         $post = $this->request->post();
 
         // Get id of current user
-        $user = Auth::instance()->get_user();
-        $user_id = isset($user) ? $user->id : NULL;
+        $current_user = Auth::instance()->get_user();
+        $current_user_id = isset($current_user) ? $current_user->id : NULL;
 
-        // Get id of article and content of comment
+        // Get id of article and content of comment. Convert special characters in
+        // HTML-entities
         $article_id = Arr::get($post, 'article_id');
-        $content = Arr::get($post, 'content');
+        $content = HTML::chars(Arr::get($post, 'content'));
 
-        // Check that article_id isn't exists
-        if ( ! $article_id)
+        // If id of article isn't defind or article with given id isn't exist
+        if ( ! $article_id OR ! $this->article_exists($article_id))
         {
             throw new HTTP_Exception_404;
         }
@@ -34,11 +35,12 @@ class Controller_Comments extends Controller_Ajax {
         $comment = ORM::factory('article_comment')
             ->values(array(
                 'article_id' => $article_id,
-                'user_id'    => $user_id,
+                'user_id'    => $current_user_id,
                 'content'    => $content,
             ))
             ->save()->reload();
 
+        // Get view of added comment
         $view = (string) View::factory('widget/comments/_comment')->set('comment', $comment);
 
         $this->answer(array(
@@ -63,6 +65,17 @@ class Controller_Comments extends Controller_Ajax {
             'index',
             $user_id
         ));
+    }
+
+    /**
+     * Данный метод проверяет, существует ли статья с данным идентификатором
+     *
+     * @param   integer  $article_id  id of article
+     * @return  bool
+     */
+    public static function article_exists($article_id)
+    {
+        return ORM::factory('article', $article_id)->loaded();
     }
 
 } // End Comments

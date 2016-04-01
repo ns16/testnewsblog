@@ -2,14 +2,6 @@
 
 class Controller_Votes extends Controller_Ajax {
 
-    protected $current_user_id = NULL;
-    protected $comment_id      = NULL;
-    protected $user_id         = NULL;
-    protected $vote            = NULL;
-
-    protected $message         = NULL;
-    protected $sum_votes       = NULL;
-
     public function action_index()
     {
         // Get value of POST array
@@ -17,105 +9,96 @@ class Controller_Votes extends Controller_Ajax {
 
         // Get id of current user
         $current_user = Auth::instance()->get_user();
-        $this->current_user_id = isset($current_user) ? $current_user->id : NULL;
+        $current_user_id = isset($current_user) ? $current_user->id : NULL;
 
-        // Get id of comment, id of user, who posted comment, and value of vote
-        $this->comment_id = Arr::get($post, 'comment_id');
-        $this->user_id = Arr::get($post, 'user_id');
-        $this->vote = Arr::get($post, 'vote');
+        // Get id of comment, id of user, who posted this comment, and value of vote
+        $comment_id = Arr::get($post, 'comment_id');
+        $user_id = Arr::get($post, 'user_id');
+        $vote = Arr::get($post, 'vote');
 
         // If value of vote isn't valid or current user is author of this comment
-        if ($this->vote_is_not_valid() OR $this->is_author_of_comment())
+        if ($this->vote_is_not_valid($vote) OR $this->user_is_author_of_comment($current_user_id, $user_id))
         {
             throw new HTTP_Exception_404;
         }
 
         // If user isn't logged
-        if ( ! $this->current_user_id)
+        if ( ! $current_user_id)
         {
-            $this->message = 'Авторизуйтесь или зарегистрируйтесь, чтобы проголосовать!';
-            $this->set_answer();
+            $this->answer(array(
+                'error' => 'Авторизуйтесь или зарегистрируйтесь, чтобы проголосовать!',
+            ));
             return;
         }
 
         // If current user already voted to this comment
-        if ($this->already_voted())
+        if ($this->user_already_voted($current_user_id, $comment_id))
         {
-            $this->message = 'Вы уже проголосовали за данный комментарий!';
-            $this->set_answer();
+            $this->answer(array(
+                'error' => 'Вы уже проголосовали за данный комментарий!',
+            ));
             return;
         }
 
         // Add vote into table
-        ORM::factory('article_comment_vote')
+        $vote = ORM::factory('article_comment_vote')
             ->values(array(
-                'comment_id' => $this->comment_id,
-                'user_id'    => $this->current_user_id,
-                'value'      => $this->vote,
+                'comment_id' => $comment_id,
+                'user_id'    => $current_user_id,
+                'value'      => $vote,
             ))
             ->save();
 
         // Get sum of votes of given comment
-        $comment = ORM::factory('article_comment', $this->comment_id);
-        $this->sum_votes = $comment->votes->get_sum_votes_comment();
+        $sum_votes = $vote->comment->votes->get_sum_votes_comment();
 
-        $this->set_answer();
-    }
+        // Get view of added comment
+        $view = (string) View::factory('widget/votes/_sum')->set('sum_votes', $sum_votes);
 
-    protected function set_answer()
-    {
-        $this->answer = array(
-            'message'   => $this->message,
-            'sum_votes' => $this->sum_votes,
-        );
+        $this->answer(array(
+            'body'   => $view,
+            'status' => 1,
+        ));
     }
 
     /**
-     * Данный метод проверяет, является значение оставленного пользователем
+     * Данный метод проверяет, является ли значение оставленного пользователем
      * голоса невалидным
      *
-     * @return bool
+     * @param   integer  $vote  value of vote
+     * @return  bool
      */
-    protected function vote_is_not_valid()
+    protected function vote_is_not_valid($vote)
     {
-        return
-            $this->vote != Model_Article_Comment_Vote::VOTE_DOWN
-            AND $this->vote != Model_Article_Comment_Vote::VOTE_UP;
-    }
-
-    /**
-     * Данный метод возвращает TRUE, если нужно запретить текущему пользователю
-     * голосовать за данный комментарий, иначе возвращает FALSE
-     *
-     * @return bool
-     */
-    protected function ban_vote()
-    {
-        return $this->is_author_of_comment() OR $this->already_voted();
+        return $vote != Model_Article_Comment_Vote::VOTE_DOWN AND $vote != Model_Article_Comment_Vote::VOTE_UP;
     }
 
     /**
      * Данный метод проверяет, является ли текущий пользователь автором данного
      * комментария
      *
-     * @return bool
+     * @param   integer  $current_user_id  id of current user
+     * @param   integer  $user_id          id of user, who posted this comment
+     * @return  bool
      */
-    protected function is_author_of_comment()
+    protected function user_is_author_of_comment($current_user_id, $user_id)
     {
-        return $this->current_user_id == $this->user_id;
+        return $current_user_id == $user_id;
     }
 
     /**
      * Данный метод проверяет, голосовал ли текущий пользователь за данный
      * комментарий
      *
-     * @return bool
+     * @param   integer  $current_user_id  id of current user
+     * @param   integer  $comment_id       id of comment
+     * @return  bool
      */
-    protected function already_voted()
+    protected function user_already_voted($current_user_id, $comment_id)
     {
         $model = ORM::factory('article_comment_vote', array(
-            'user_id'    => $this->current_user_id,
-            'comment_id' => $this->comment_id,
+            'user_id'    => $current_user_id,
+            'comment_id' => $comment_id,
         ));
 
         return $model->loaded();

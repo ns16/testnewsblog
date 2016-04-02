@@ -3,6 +3,7 @@ var comment_buttons = document.getElementsByClassName("comment-button-delete");
 
 // Для каждой кнопки удаления комментария назначить обработчик события "клик левой
 // клавишей мыши"
+
 for (var i = 0; i < comment_buttons.length; i++)
 {
     comment_buttons[i].onclick = function() {

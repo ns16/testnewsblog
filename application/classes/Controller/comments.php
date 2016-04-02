@@ -56,6 +56,7 @@ class Controller_Comments extends Controller_Ajax {
 
         // If id of comment isn't defind or comment with given id doesn't belong to
         // current user
+
         if ( ! $comment_id OR ! Model_Article_Comment::comment_belongs_to_user($comment_id, $this->current_user_id))
         {
             throw new HTTP_Exception_404;

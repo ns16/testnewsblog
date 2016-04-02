@@ -7,10 +7,6 @@ class Controller_Comments extends Controller_Ajax {
         // Get value of POST array
         $post = $this->request->post();
 
-        // Get id of current user
-        $current_user = Auth::instance()->get_user();
-        $current_user_id = isset($current_user) ? $current_user->id : NULL;
-
         // Get id of article and content of comment. Convert special characters in
         // HTML-entities
         $article_id = Arr::get($post, 'article_id');
@@ -35,7 +31,7 @@ class Controller_Comments extends Controller_Ajax {
         $comment = ORM::factory('article_comment')
             ->values(array(
                 'article_id' => $article_id,
-                'user_id'    => $current_user_id,
+                'user_id'    => $this->current_user_id,
                 'content'    => $content,
             ))
             ->save()->reload();
@@ -54,17 +50,13 @@ class Controller_Comments extends Controller_Ajax {
         // Get value of POST array
         $post = $this->request->post();
 
-        // Get id of current user
-        $current_user = Auth::instance()->get_user();
-        $current_user_id = isset($current_user) ? $current_user->id : NULL;
-
         // Get id of article and content of comment. Convert special characters in
         // HTML-entities
         $comment_id = Arr::get($post, 'comment_id');
 
         // If id of comment isn't defind or comment with given id doesn't belong to
         // current user
-        if ( ! $comment_id OR ! Model_Article_Comment::comment_belongs_to_user($comment_id, $current_user_id))
+        if ( ! $comment_id OR ! Model_Article_Comment::comment_belongs_to_user($comment_id, $this->current_user_id))
         {
             throw new HTTP_Exception_404;
         }

@@ -2,6 +2,8 @@
 
 class Controller_Ajax extends Controller {
 
+    protected $current_user_id = NULL;
+
     protected $answer = array(
         'status' => 0,
         'error'  => '',
@@ -16,6 +18,9 @@ class Controller_Ajax extends Controller {
         {
             throw new HTTP_Exception_404;
         }
+
+        $current_user = Auth::instance()->get_user();
+        $this->current_user_id = isset($current_user) ? $current_user->id : NULL;
     }
 
     public function after()

@@ -7,10 +7,6 @@ class Controller_Favorites extends Controller_Ajax {
         // Get value of POST array
         $post = $this->request->post();
 
-        // Get id of current user
-        $current_user = Auth::instance()->get_user();
-        $current_user_id = isset($current_user) ? $current_user->id : NULL;
-
         // Get id of article
         $article_id = Arr::get($post, 'article_id');
 
@@ -21,7 +17,7 @@ class Controller_Favorites extends Controller_Ajax {
         }
 
         // If user isn't logged
-        if ( ! $current_user_id)
+        if ( ! $this->current_user_id)
         {
             $this->answer(array(
                 'error' => 'Авторизуйтесь или зарегистрируйтесь, чтобы добавить статью в избранное!',
@@ -31,7 +27,7 @@ class Controller_Favorites extends Controller_Ajax {
 
         // Get model of link of user and article with given id
         $model = ORM::factory('User_Article')
-            ->where('user_id', '=', $current_user_id)
+            ->where('user_id', '=', $this->current_user_id)
             ->where('article_id', '=', $article_id)
             ->find();
 
@@ -47,7 +43,7 @@ class Controller_Favorites extends Controller_Ajax {
             // If model isn't loaded, then add record into table
             $model
                 ->values(array(
-                    'user_id'    => $current_user_id,
+                    'user_id'    => $this->current_user_id,
                     'article_id' => $article_id,
                 ))
                 ->save();
@@ -61,7 +57,7 @@ class Controller_Favorites extends Controller_Ajax {
         // Get view of icon
         $view = (string) View::factory('widget/favorite/_icon')
             ->set(array(
-                'current_user_id' => $current_user_id,
+                'current_user_id' => $this->current_user_id,
                 'user_ids'        => $user_ids
             ));
 

@@ -7,23 +7,19 @@ class Controller_Votes extends Controller_Ajax {
         // Get value of POST array
         $post = $this->request->post();
 
-        // Get id of current user
-        $current_user = Auth::instance()->get_user();
-        $current_user_id = isset($current_user) ? $current_user->id : NULL;
-
         // Get id of comment, id of user, who posted this comment, and value of vote
         $comment_id = Arr::get($post, 'comment_id');
         $user_id = Arr::get($post, 'user_id');
         $vote = Arr::get($post, 'vote');
 
         // If value of vote isn't valid or current user is author of this comment
-        if ($this->vote_is_not_valid($vote) OR $this->user_is_author_of_comment($current_user_id, $user_id))
+        if ($this->vote_is_not_valid($vote) OR $this->user_is_author_of_comment($this->current_user_id, $user_id))
         {
             throw new HTTP_Exception_404;
         }
 
         // If user isn't logged
-        if ( ! $current_user_id)
+        if ( ! $this->current_user_id)
         {
             $this->answer(array(
                 'error' => 'Авторизуйтесь или зарегистрируйтесь, чтобы проголосовать!',
@@ -32,7 +28,7 @@ class Controller_Votes extends Controller_Ajax {
         }
 
         // If current user already voted to this comment
-        if ($this->user_already_voted($current_user_id, $comment_id))
+        if ($this->user_already_voted($this->current_user_id, $comment_id))
         {
             $this->answer(array(
                 'error' => 'Вы уже проголосовали за данный комментарий!',
@@ -44,7 +40,7 @@ class Controller_Votes extends Controller_Ajax {
         $vote = ORM::factory('article_comment_vote')
             ->values(array(
                 'comment_id' => $comment_id,
-                'user_id'    => $current_user_id,
+                'user_id'    => $this->current_user_id,
                 'value'      => $vote,
             ))
             ->save();

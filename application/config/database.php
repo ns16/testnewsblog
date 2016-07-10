@@ -8,8 +8,8 @@ return array
 		'connection' => array(
 			'hostname'   => 'localhost',
 			'database'   => 'kohana-test',
-			'username'   => 'kohana-test',
-			'password'   => 'v65AgO',
+			'username'   => 'kohana',
+			'password'   => '123',
 			'persistent' => FALSE,
 		),
 		'table_prefix' => '',
